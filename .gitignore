@@ -1,0 +1,16 @@
+# Config sensible (identifiants BDD)
+/config/config.php
+
+# Dépendances (si tu ajoutes Composer plus tard)
+/vendor/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers IDE
+.vscode/
+.idea/
+
+# Logs éventuels
+*.log
