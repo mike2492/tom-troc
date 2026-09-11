@@ -2,8 +2,7 @@
 
 class UserController extends Controller{
 
-    public function account(): void
-    {
+    public function account(): void{
         if(!$this->isLoggedIn()){
             header('Location: index.php?controller=auth&action=login');
             exit;
