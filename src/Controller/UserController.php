@@ -10,7 +10,41 @@ class UserController extends Controller{
         
         $userManager = new UserManager();
         $user = $userManager->findById($_SESSION['user_id']);
-        $this->render('user/account', ['user' => $user]);
+        $errors = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $username = trim($_POST['username']);
+            $email = trim($_POST['email']);
+            $password = $_POST['password'];
+
+            if(empty($username)){
+                $errors['username'] = "Le pseudo est requis";
+            }
+
+            if(empty($email)){
+                $errors['email'] = "L'email est requis";
+            } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $errors['email'] = "L'email est non valide";
+            }
+
+            if(empty($errors)){
+                $user->setUsername($username);
+                $user->setEmail($email);
+
+                if(!empty($password)){
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                    $user->setPassword($hashedPassword);
+                    $userManager->update($user, true);
+                } else{
+                    $userManager->update($user, false);
+                }
+
+                header('Location: index.php?controller=user&action=account');
+                exit;
+            }
+        }
+
+        $this->render('user/account', ['user' => $user, 'errors' => $errors]);
     }
 
     public function publicProfile(){
