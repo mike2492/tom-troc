@@ -1,6 +1,6 @@
 <h1>Inscription</h1>
 
-<form action="index.php?controller=auth&action=register">
+<form action="index.php?controller=auth&action=register" method="POST">
     <label for="username">Pseudo</label>
     <input type="text" name="username" id="username">
 

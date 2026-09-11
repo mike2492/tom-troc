@@ -10,4 +10,9 @@ abstract class Controller
         $content = ob_get_clean();
         require __DIR__ . '/../View/layout.php';
     }
+
+    protected function isLoggedIn() : bool
+    {
+        return isset($_SESSION['user_id']);
+    }
 }
