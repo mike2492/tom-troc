@@ -7,13 +7,19 @@ class BookController extends Controller
 
         $search = null;
         $bookManager = new BookManager();
+        $userManager = new UserManager();
 
         if(isset($_GET['search'])){
             $search = $_GET['search'];
         }
 
         $books = $bookManager->findAll($search);
-        $this->render('book/list', ['books' => $books, 'search' => $search]);
+        $owners = [];
+        foreach($books as $book){
+            $owners[$book->getId()] = $userManager->findById($book->getUserId());
+        }
+
+        $this->render('book/list', ['books' => $books, 'search' => $search, 'owners' => $owners]);
     }
 
     public function show(): void{
