@@ -1,0 +1,59 @@
+body{
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 80px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 150px;
+    gap: 266px;
+    background-color: #F5F3EF;
+}
+
+.left-group{
+    display: flex;
+    align-items: center;
+    gap: 78px;
+}
+
+.left-group nav{
+    display: flex;
+    align-items: center;
+    gap: 44px;
+}
+
+.container > nav{
+    display: flex;
+    align-items: center;
+    gap: 58px;
+}
+
+
+header a {
+    white-space: nowrap;
+    color: black;
+    text-decoration: none;
+}
+
+@media (max-width: 1300px) {
+    .container {
+        padding: 0 131px;   /* 150 × 0.877 */
+        gap: 233px;          /* 266 × 0.877 */
+    }
+
+    .left-group {
+        gap: 68px;           /* 78 × 0.877 */
+    }
+
+    .left-group nav {
+        gap: 39px;           /* 44 × 0.877 */
+    }
+
+    .container > nav {
+        gap: 51px;           /* 58 × 0.877 */
+    }
+}
