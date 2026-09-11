@@ -38,4 +38,26 @@ class UserManager{
             'password' => $user->getPassword()
         ]);
     }
+
+    public function findByUsername(string $username) : ?User{
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username');
+        $stmt->execute([
+            'username' => $username
+        ]);
+
+        $data = $stmt->fetch();
+        if(!$data){
+            return null;
+        }
+
+        $user = new User();
+        $user->setId($data['id']);
+        $user->setUsername($data['username']);
+        $user->setEmail($data['email']);
+        $user->setPassword($data['password']);
+        $user->setAvatar($data['avatar']);
+        $user->setCreatedAt(new DateTime($data['created_at']));
+
+        return $user;
+    }
 }
