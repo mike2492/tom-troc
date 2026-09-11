@@ -82,4 +82,23 @@ class UserManager{
 
         return $user;
     }
+
+    public function update(User $user, bool $updatePassword = false) : void{
+        if($updatePassword){
+           $stmt = $this->db->prepare('UPDATE users SET username = :username, email = :email, password = :password WHERE id = :id'); 
+           $stmt->execute([
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+                'password' => $user->getPassword(),
+                'id' => $user->getId()
+           ]);
+        } else {
+            $stmt = $this->db->prepare('UPDATE users SET username = :username, email = :email WHERE id = :id');
+            $stmt->execute([
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+                'id' => $user->getId()
+            ]); 
+        }
+    }
 }
