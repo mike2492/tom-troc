@@ -27,6 +27,13 @@ class MessageController extends Controller{
         }
 
         $otherId = (int) $_GET['id'];
+        
+        if($otherId === $_SESSION['user_id']){
+            header('Location: index.php?controller=message&action=inbox');
+            exit;
+        }
+
+
         $userManager = new UserManager();
         $otherUser = $userManager->findById($otherId);
 
