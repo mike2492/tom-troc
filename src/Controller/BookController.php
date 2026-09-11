@@ -58,7 +58,7 @@ class BookController extends Controller
             }
         }
 
-        $this->render('book/edit', ['book' => $book]);
+        $this->render('book/edit', ['book' => $book, 'errors' => []]);
     }
 
     public function save() : void{
