@@ -82,4 +82,10 @@ class AuthController extends Controller{
         
         $this->render('auth/login', ['errors' => $errors]);
     }
+
+    public function logout(){
+        session_destroy();
+        header('Location: index.php?controller=auth&action=login');
+        exit;
+    }
 }
