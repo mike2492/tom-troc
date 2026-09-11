@@ -10,6 +10,8 @@ class UserController extends Controller{
         
         $userManager = new UserManager();
         $user = $userManager->findById($_SESSION['user_id']);
+        $bookManager = new BookManager();
+        $books = $bookManager->findByUserId($_SESSION['user_id']);
         $errors = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -44,7 +46,7 @@ class UserController extends Controller{
             }
         }
 
-        $this->render('user/account', ['user' => $user, 'errors' => $errors]);
+        $this->render('user/account', ['user' => $user, 'errors' => $errors, 'books' => $books]);
     }
 
     public function publicProfile(){
