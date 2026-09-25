@@ -167,4 +167,23 @@ class AccountController extends Controller{
         
         $this->render('account/book-form', ['title' => 'Editer un livre', 'errors' => $errors, 'book' => $book]);
     }
+
+    public function deleteBook(){
+        $this->requireAuth();
+        $id = (int) $_GET['id'];
+
+        $bookManager = new BookManager();
+        $book = $bookManager->findById($id);
+
+        if($book === null || $book->getUserId() !== $_SESSION['user_id']){
+            header('Location: index.php?controller=account&action=index');
+            exit;
+        }
+
+        $bookManager->delete($id);
+
+        header('Location: index.php?controller=account&action=index');
+        exit;
+
+    }
 }
