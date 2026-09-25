@@ -84,4 +84,15 @@ class UserManager{
 
         return $user;
     }
+
+    public function update(User $user) : bool{
+        $stmt = $this->db->prepare('UPDATE users SET username = :username, email = :email, password = :password, avatar = :avatar WHERE id = :id');
+        return $stmt->execute([
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'avatar' => $user->getAvatar(),
+            'id' => $user->getId()
+        ]);
+    }
 }
