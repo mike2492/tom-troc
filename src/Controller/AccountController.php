@@ -118,4 +118,53 @@ class AccountController extends Controller{
 
         $this->render('account/book-form', ['title' => 'Ajouter un livre', 'errors' => $errors]);
     }
+
+    public function editBook(){
+        $this->requireAuth();
+
+        $id = (int) $_GET['id'];
+
+        $bookManager = new BookManager();
+        $userManager = new UserManager();
+
+        $book = $bookManager->findById($id);
+
+        if($book === null || $book->getUserId() !== $_SESSION['user_id']){
+            header('Location: index.php?controller=account&action=index');
+            exit;
+        }
+
+        $errors = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $title = trim($_POST['title']);
+            $author = trim($_POST['author']);
+            $description = trim($_POST['description']);
+            $availability = $_POST['availability'] ?? 'available';
+
+            if(empty($title)){
+                $errors['title'] = "Titre obligatoire";
+            }
+
+            if(empty($author)){
+                $errors['author'] = "Auteur obligatoire";
+            }
+
+            if(empty($description)){
+                $errors['description'] = "Description obligatoire";
+            }
+
+            if(empty($errors)){
+                $book->setTitle($title);
+                $book->setAuthor($author);
+                $book->setDescription($description);
+                $book->setAvailability($availability);
+                $bookManager->update($book);
+                header('Location: index.php?controller=account&action=index');
+                exit;
+            }
+        }
+        
+        $this->render('account/book-form', ['title' => 'Editer un livre', 'errors' => $errors, 'book' => $book]);
+    }
 }
