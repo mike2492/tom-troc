@@ -78,4 +78,44 @@ class AccountController extends Controller{
 
         $this->render('account/index', ['title' => 'Mon compte', 'errors' => $errors, 'user' => $user, 'books' => $books]);
     }
+
+    public function createBook(){
+        $this->requireAuth();
+
+        $errors = [];
+        $bookManager = new BookManager();
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $title = trim($_POST['title']);
+            $author = trim($_POST['author']);
+            $description = trim($_POST['description']);
+            $availability = $_POST['availability'] ?? 'available';
+
+            if(empty($title)){
+                $errors['title'] = "Titre obligatoire";
+            }
+
+            if(empty($author)){
+                $errors['author'] = "Auteur obligatoire";
+            }
+
+            if(empty($description)){
+                $errors['description'] = "Description obligatoire";
+            }
+
+            if(empty($errors)){
+                $book = new Book();
+                $book->setTitle($title);
+                $book->setAuthor($author);
+                $book->setDescription($description);
+                $book->setAvailability($availability);
+                $book->setUserId($_SESSION['user_id']);
+                $bookManager->create($book);
+                header('Location: index.php?controller=account&action=index');
+                exit;
+            }
+        }
+
+        $this->render('account/book-form', ['title' => 'Ajouter un livre', 'errors' => $errors]);
+    }
 }
