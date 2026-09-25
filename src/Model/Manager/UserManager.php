@@ -61,4 +61,27 @@ class UserManager{
 
         return $user;
     }
+
+    public function findById(int $id) : ?User{
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE id = :id');
+        $stmt->execute([
+            'id' => $id
+        ]);
+
+        $row = $stmt->fetch();
+
+        if($row === false){
+            return null;
+        }
+
+        $user = new User();
+        $user->setId($row['id']);
+        $user->setUsername($row['username']);
+        $user->setEmail($row['email']);
+        $user->setPassword($row['password']);
+        $user->setAvatar($row['avatar']);
+        $user->setCreatedAt(new DateTime($row['created_at']));
+
+        return $user;
+    }
 }
