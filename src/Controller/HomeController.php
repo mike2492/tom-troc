@@ -2,6 +2,9 @@
 class HomeController extends Controller{
 
     public function index(){
-        $this->render('home', ['title' => 'Accueil']);
+        $bookManager = new BookManager();
+        $books = $bookManager->findLatest(4);
+
+        $this->render('home', ['title' => 'Accueil', 'books' => $books]);
     }
 }
