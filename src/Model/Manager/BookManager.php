@@ -85,4 +85,16 @@ class BookManager extends Manager{
 
         return (int) $this->pdo->lastInsertId();
     }
+
+    public function update(Book $book) : void{
+        $stmt = $this->pdo->prepare('UPDATE books SET title = :title, author = :author, description = :description, image = :image, availability = :availability WHERE id = :id');
+        $stmt->execute([
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'description' => $book->getDescription(),
+            'image' => $book->getImage(),
+            'availability' => $book->getAvailability(),
+            'id' => $book->getId()
+        ]);
+    }
 }
