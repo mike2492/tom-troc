@@ -71,4 +71,18 @@ class BookManager extends Manager{
         $book = new Book($row);
         return $book;
     }
+
+    public function create(Book $book) : int{
+        $stmt = $this->pdo->prepare('INSERT INTO books (title, author, description, image, availability, user_id) VALUES (:title, :author, :description, :image, :availability, :user_id)');
+        $stmt->execute([
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'description' => $book->getDescription(),
+            'image' => $book->getImage(),
+            'availability' => $book->getAvailability(),
+            'user_id' => $book->getUserId()
+        ]);
+
+        return (int) $this->pdo->lastInsertId();
+    }
 }
