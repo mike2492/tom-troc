@@ -56,4 +56,19 @@ class BookManager extends Manager{
 
         return $books;
     }
+
+    public function findById(int $id) : ?Book{
+        $stmt = $this->pdo->prepare('SELECT * FROM books WHERE id = :id');
+        $stmt->execute([
+            'id' => $id
+        ]);
+        $row = $stmt->fetch();
+
+        if($row === false){
+            return null;
+        }
+
+        $book = new Book($row);
+        return $book;
+    }
 }
