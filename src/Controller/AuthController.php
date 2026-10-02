@@ -70,8 +70,9 @@ class AuthController extends Controller{
                 if($user === null || !password_verify($password, $user->getPassword())){
                     $errors['login'] = "Email ou mot de passe incorrect";
                 } else{
+                    session_regenerate_id(true);
                     $_SESSION['user_id'] = $user->getId();
-                    header('Location: index.php');
+                    header('Location: index.php?controller=account&action=index');
                     exit;
                 }
             }
