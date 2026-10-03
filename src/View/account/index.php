@@ -30,7 +30,8 @@
                         <?php endif; ?>
                     </td>
                     <td>
-
+                        <a href="index.php?controller=account&action=editBook&id=<?= $book->getId() ?>">Editer</a>
+                        <a href="index.php?controller=account&action=deleteBook&id=<?= $book->getId() ?>">Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
