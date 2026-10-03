@@ -29,6 +29,18 @@ class MessageController extends Controller{
             $partners[$otherUserId] = $userManager->findById($otherUserId);
         }
 
-        $this->render('message/index', ['conversations' => $conversations, 'partners' => $partners]);
+        $selectedId = filter_var($_GET['user'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+
+        $thread = [];
+        $selected = null;
+
+        if($selectedId !== null && $selectedId !== false){
+            $selected = $userManager->findById($selectedId);
+            if($selected !== null){
+                $thread = $messageManager->findConversation($userId, $selectedId);
+            }   
+        }
+
+        $this->render('message/index', ['conversations' => $conversations, 'partners' => $partners, 'thread' => $thread, 'selected' => $selected]);
     }
 }
