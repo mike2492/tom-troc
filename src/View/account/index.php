@@ -1,6 +1,19 @@
 <p><?= $user->getUsername() ?></p>
 <p><?= count($books) ?></p>
 
+<form action="index.php?controller=account&action=updateProfile" method="POST">
+    <label for="email">Adresse email</label>
+    <input type="email" name="email" id="email" value="<?= $user->getEmail() ?>">
+
+    <label for="password">Mot de passe</label>
+    <input type="password" name="password" id="password">
+
+    <label for="username">Pseudo</label>
+    <input type="text" name="username" id="username" value="<?= $user->getUsername() ?>">
+
+    <button type="submit">Enregistrer</button>
+</form>
+
 <?php if(empty($books)): ?>
     <p>Aucun livre pour le moment</p>
 <?php else: ?>
