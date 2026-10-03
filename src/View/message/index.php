@@ -12,4 +12,10 @@
     <?= $msg->getContent() ?>
 <?php endforeach; ?>
 
-<?php var_dump($_SESSION['user_id']) ?>
+
+<?php if($selected !== null): ?>
+    <form method="POST">
+        <input type="text" name="content" placeholder="Tapez votre message ici">
+        <button type="submit">Envoyer</button>
+    </form>
+<?php endif; ?>
