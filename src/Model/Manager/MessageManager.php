@@ -28,4 +28,21 @@ class MessageManager extends Manager{
 
         return $messages;
     }
+
+    public function findByUser(int $userId) : array{
+        $stmt = $this->pdo->prepare('SELECT * FROM messages WHERE sender_id = :u1 OR receiver_id = :u2 ORDER BY sent_at DESC, id DESC');
+        $stmt->execute([
+            'u1' => $userId,
+            'u2' => $userId
+        ]);
+
+        $rows = $stmt->fetchAll();
+        $messages = [];
+
+        foreach($rows as $row){
+            $messages[] = new Message($row);
+        }
+        
+        return $messages;
+    }
 }
