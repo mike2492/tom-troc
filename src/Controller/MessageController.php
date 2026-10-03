@@ -22,6 +22,13 @@ class MessageController extends Controller{
             }
         }
 
-        $this->render('message/index', ['conversations' => $conversations]);
+        $userManager = new UserManager();
+        $partners = [];
+
+        foreach($conversations as $otherUserId => $message){
+            $partners[$otherUserId] = $userManager->findById($otherUserId);
+        }
+
+        $this->render('message/index', ['conversations' => $conversations, 'partners' => $partners]);
     }
 }
