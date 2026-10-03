@@ -24,4 +24,26 @@ class BookController extends Controller{
 
         $this->render('book/index', ['books' => $books, 'owners' => $owners, 'search' => $search]);
     }
+
+    public function show(){
+        $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+
+        if($id === false || $id === null){
+            header('Location: index.php?controller=book&action=index');
+            exit;
+        }
+
+        $bookManager = new BookManager();
+        $book = $bookManager->findById($id);
+
+        if($book === null){
+            header('Location: index.php?controller=book&action=index');
+            exit;
+        }
+
+        $userManager = new UserManager();
+        $owner = $userManager->findById($book->getUserId());
+
+        $this->render('book/show', ['book' => $book, 'owner' => $owner]);
+    }
 }
