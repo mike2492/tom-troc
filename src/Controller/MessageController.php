@@ -41,6 +41,20 @@ class MessageController extends Controller{
             }   
         }
 
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && $selected !== null && $selectedId !== $userId){
+            $content = trim($_POST['content'] ?? '');
+            if($content !== ''){
+                $newMessage = new Message([
+                    'sender_id' => $userId,
+                    'receiver_id' => $selectedId,
+                    'content' => $content
+                ]);       
+                $messageManager->create($newMessage);
+                header('Location: index.php?controller=message&action=index&user=' . $selectedId);
+                exit;
+            }
+        }
+
         $this->render('message/index', ['conversations' => $conversations, 'partners' => $partners, 'thread' => $thread, 'selected' => $selected]);
     }
 }
