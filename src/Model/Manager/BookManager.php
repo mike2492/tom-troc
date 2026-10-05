@@ -61,4 +61,17 @@ class BookManager extends Manager{
             'id' => $id
         ]);
     }
+
+    public function findAll() : array{
+        $stmt = $this->db->prepare('SELECT * FROM books ORDER BY created_at DESC');
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $books = [];
+
+        foreach($rows as $row){
+            $books[] = new Book($row);
+        }
+
+        return $books;
+    }
 }
