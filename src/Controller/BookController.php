@@ -130,5 +130,10 @@ class BookController extends Controller{
             header('Location: index.php');
             exit;
         }
+
+        $userManager = new UserManager();
+        $owner = $userManager->findById($book->getUserId());
+
+        $this->render('book/show', ['title' => 'Détail du livre', 'book' => $book, 'owner' => $owner]);
     }
 }
