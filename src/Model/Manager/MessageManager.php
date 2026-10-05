@@ -10,4 +10,21 @@ class MessageManager extends Manager{
             'content' => $message->getContent()
         ]);
     }
+
+    public function findThread(int $userA, int $userB) : array{
+        $stmt = $this->db->prepare('SELECT * FROM messages WHERE (sender_id = :a1 AND receiver_id = :b1) OR (sender_id = :b1 AND receiver_id = :a1) ORDER BY sent_at ASC, id ASC');
+        $stmt->execute([
+            'a1' => $userA,
+            'b1' => $userB
+        ]);
+
+        $rows = $stmt->fetchAll();
+        $threads = [];
+
+        foreach($rows as $row){
+            $threads[] = new Message($row);
+        }
+
+        return $threads;
+    }
 }
