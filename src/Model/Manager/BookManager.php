@@ -17,4 +17,15 @@ class BookManager extends Manager{
 
         return $books;
     }
+
+    public function create(Book $book) : bool{
+        $stmt = $this->db->prepare('INSERT INTO books (title, author, description, availability, user_id) VALUES (:title, :author, :description, :availability, :user_id)');
+        return $stmt->execute([
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'description' => $book->getDescription(),
+            'availability' => $book->getAvailability(),
+            'user_id' => $book->getUserId()
+        ]);
+    }
 }
