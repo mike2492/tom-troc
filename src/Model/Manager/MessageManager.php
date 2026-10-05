@@ -27,4 +27,20 @@ class MessageManager extends Manager{
 
         return $threads;
     }
+
+    public function findConversations(int $user_id) : array{
+        $stmt = $this->db->prepare('SELECT * FROM messages WHERE sender_id = :me OR receiver_id = :me ORDER BY sent_at DESC, id DESC');
+        $stmt->execute([
+            'me' => $user_id
+        ]);
+        
+        $rows = $stmt->fetchAll();
+        $conversations = [];
+
+        foreach($rows as $row){
+            $conversations[] = new Message($row);
+        }
+
+        return $conversations;
+    }
 }
