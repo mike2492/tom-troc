@@ -28,4 +28,19 @@ class BookManager extends Manager{
             'user_id' => $book->getUserId()
         ]);
     }
+
+    public function findById(int $id) : ?Book{
+        $stmt = $this->db->prepare('SELECT * FROM books WHERE id = :id');
+        $stmt->execute([
+            'id' => $id
+        ]);
+
+        $row = $stmt->fetch();
+
+        if($row === false){
+            return null;
+        }
+
+        return new Book($row);
+    }
 }
