@@ -6,7 +6,6 @@ class AccountController extends Controller{
         $this->requireAuth();
         $userManager = new UserManager();
         $user = $userManager->findById($_SESSION['user_id']);
-        $errors = [];
 
         if($user === null){
             $_SESSION = [];
@@ -14,6 +13,8 @@ class AccountController extends Controller{
             header('Location: index.php?controller=auth&action=login');
             exit;
         }
+
+        $errors = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $username = trim($_POST['username'] ?? '');
@@ -55,7 +56,10 @@ class AccountController extends Controller{
             }
            
         }
+
+        $bookManager = new BookManager();
+        $books = $bookManager->findByUserId($user->getId());
         
-        $this->render('account/index', ['title' => 'Mon compte', 'user' => $user, 'errors' => $errors]);
+        $this->render('account/index', ['title' => 'Mon compte', 'user' => $user, 'errors' => $errors, 'books' => $books]);
     }
 }
