@@ -136,4 +136,20 @@ class BookController extends Controller{
 
         $this->render('book/show', ['title' => 'Détail du livre', 'book' => $book, 'owner' => $owner]);
     }
+
+    public function index(){
+        $bookManager = new BookManager();
+        $books = $bookManager->findAll();
+
+        $userManager = new UserManager();
+        $owners = [];
+
+        foreach($books as $book){
+            if(!isset($owners[$book->getUserId()])){
+                $owners[$book->getUserId()] = $userManager->findById($book->getUserId());
+            }
+        }
+
+        $this->render('book/index', ['title' => 'Nos livres à l\'échange', 'books' => $books, 'owners' => $owners]);
+    }
 }
