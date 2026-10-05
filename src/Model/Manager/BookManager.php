@@ -89,4 +89,17 @@ class BookManager extends Manager{
 
         return $books;
     }
+
+    public function findLatest(int $limit) : array{
+        $stmt = $this->db->prepare('SELECT * FROM books ORDER BY created_at DESC LIMIT :limit');
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $books = [];
+        foreach($rows as $row){
+            $books[] = new Book($row);
+        }
+
+        return $books;
+    }
 }
