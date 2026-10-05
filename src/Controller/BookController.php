@@ -120,4 +120,15 @@ class BookController extends Controller{
         header('Location: index.php?controller=account&action=index');
         exit;
     }
+
+    public function show(){
+        $id = (int) ($_GET['id'] ?? 0);
+        $bookManager = new BookManager();
+
+        $book = $bookManager->findById($id);
+        if($book === null){
+            header('Location: index.php');
+            exit;
+        }
+    }
 }
