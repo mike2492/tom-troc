@@ -1,0 +1,10 @@
+# Identifiants de la base de données
+config/config.php
+
+# IDE
+.idea/
+.vscode/
+
+# Système
+.DS_Store
+Thumbs.db
