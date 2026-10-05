@@ -43,4 +43,15 @@ class BookManager extends Manager{
 
         return new Book($row);
     }
+
+    public function update(Book $book) : bool{
+        $stmt = $this->db->prepare('UPDATE books SET title = :title, author = :author, description = :description, availability = :availability WHERE id = :id');
+        return $stmt->execute([
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'description' => $book->getDescription(),
+            'availability' => $book->getAvailability(),
+            'id' => $book->getId()
+        ]);
+    }
 }
