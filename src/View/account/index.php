@@ -57,6 +57,10 @@
                     </td>
                     <td>
                         <a href="index.php?controller=book&action=edit&id=<?= $book->getId() ?>">Éditer</a>
+                        <form method="POST" action="index.php?controller=book&action=delete">
+                            <input type="hidden" name="id" value="<?= $book->getId() ?>">
+                            <button type="submit">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
