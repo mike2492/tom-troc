@@ -3,6 +3,7 @@
 <p>Membre depuis : <?= htmlspecialchars($user->getCreatedAt()) ?></p>
 <h2>Bibliothèque</h2>
 <p><?= htmlspecialchars(count($books)) ?> livres</p>
+<a href="index.php?controller=book&action=create">Ajouter un livre</a>
 
 
 <form method="POST">
