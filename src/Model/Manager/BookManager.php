@@ -74,4 +74,19 @@ class BookManager extends Manager{
 
         return $books;
     }
+
+    public function findByTitle(string $search) : array{
+        $stmt = $this->db->prepare('SELECT * FROM books WHERE title LIKE :search ORDER BY created_at DESC');
+        $stmt->execute([
+            'search' => '%' . $search . '%'
+        ]);
+        $rows = $stmt->fetchAll();
+        $books = [];
+
+        foreach($rows as $row){
+            $books[] = new Book($row);
+        }
+
+        return $books;
+    }
 }
