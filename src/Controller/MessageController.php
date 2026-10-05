@@ -1,0 +1,44 @@
+<?php
+
+class MessageController extends Controller{
+
+    public function thread(){
+        $this->requireAuth();
+
+        $otherId = (int) ($_GET['user'] ?? 0);
+        $userManager = new UserManager();
+
+        $otherUser = $userManager->findById($otherId);
+        if($otherUser === null || $otherId === $_SESSION['user_id']){
+            header('Location: index.php?controller=account&action=index');
+            exit;
+        }
+
+        $errors = [];
+        $messageManager = new MessageManager();
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $content = trim($_POST['content'] ?? '');
+
+            if(empty($content)){
+                $errors['content'] = "Message requis";
+            }
+
+            if(empty($errors)){
+                $message = new Message();
+                $message->setSenderId($_SESSION['user_id']);
+                $message->setReceiverId($otherId);
+                $message->setContent($content);
+                $messageManager->create($message);
+                header('Location: index.php?controller=message&action=thread&user=' . $otherId);
+                exit;
+            }
+        }
+
+        
+        $messages = $messageManager->findThread($_SESSION['user_id'], $otherId);
+
+        $this->render('message/thread', ['title' => 'Messagerie', 
+        'otherUser' => $otherUser, 'messages' => $messages, 'errors' => $errors]);
+    }
+}
