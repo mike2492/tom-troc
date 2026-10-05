@@ -1,16 +1,18 @@
 <?php
 
 class ProfileController extends Controller{
-
     public function show(){
-        $this->requireAuth();
-
         $id = (int) ($_GET['id'] ?? 0);
 
         $userManager = new UserManager();
         $profileUser = $userManager->findById($id);
 
-        if($profileUser === null || $id === $_SESSION['user_id']){
+        if($profileUser === null){
+            header('Location: index.php');
+            exit;
+        }
+
+        if(isset($_SESSION['user_id']) && $id === $_SESSION['user_id']){
             header('Location: index.php?controller=account&action=index');
             exit;
         }
