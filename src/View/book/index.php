@@ -1,5 +1,12 @@
 <h1>Nos livres à l'échange</h1>
 
+<form method="GET">
+    <input type="hidden" name="controller" value="book">
+    <input type="hidden" name="action" value="index">
+    <input type="text" name="search" placeholder="Rechercher un livre" value="<?= htmlspecialchars($search) ?>">
+    <button type="submit">Rechercher</button>
+</form>
+
 <?php if(empty($books)): ?>
     <p>Aucun livre pour le moment</p>
 <?php else: ?>
