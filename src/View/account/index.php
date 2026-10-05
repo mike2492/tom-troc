@@ -38,6 +38,7 @@
                 <th>Auteur</th>
                 <th>Description</th>
                 <th>Disponibilité</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -53,6 +54,9 @@
                         <?php else: ?>
                             <span>non dispo.</span>
                         <?php endif; ?>
+                    </td>
+                    <td>
+                        <a href="index.php?controller=book&action=edit&id=<?= $book->getId() ?>">Éditer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
