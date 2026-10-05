@@ -41,4 +41,33 @@ class MessageController extends Controller{
         $this->render('message/thread', ['title' => 'Messagerie', 
         'otherUser' => $otherUser, 'messages' => $messages, 'errors' => $errors]);
     }
+
+    public function index(){
+        $this->requireAuth();
+        $messageManager = new MessageManager();
+
+        $messages = $messageManager->findConversations($_SESSION['user_id']);
+        $conversations = [];
+
+        foreach($messages as $message){
+            if($message->getSenderId() === $_SESSION['user_id']){
+                $otherId = $message->getReceiverId();
+            } else{
+                $otherId = $message->getSenderId();
+            }
+
+            if(!isset($conversations[$otherId])){
+                $conversations[$otherId] = $message;
+            }
+        }
+
+        $userManager = new UserManager();
+        $users = [];
+
+        foreach($conversations as $otherId => $message){
+            $users[$otherId] = $userManager->findById($otherId);
+        }
+
+        $this->render('message/index', ['title' => 'Messagerie', 'conversations' => $conversations, 'users' => $users]); 
+    }
 }
