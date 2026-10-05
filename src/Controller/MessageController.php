@@ -37,13 +37,32 @@ class MessageController extends Controller{
 
         
         $messages = $messageManager->findThread($_SESSION['user_id'], $otherId);
+        [$conversations, $users] = $this->getConversations();
+
+
 
         $this->render('message/thread', ['title' => 'Messagerie', 
-        'otherUser' => $otherUser, 'messages' => $messages, 'errors' => $errors]);
+        'otherUser' => $otherUser, 'messages' => $messages, 'errors' => $errors, 'conversations' => $conversations, 'users' => $users]);
     }
 
     public function index(){
         $this->requireAuth();
+        
+        [$conversations, $users] = $this->getConversations();
+
+        if(empty($conversations)){
+            $otherUser = null;
+            $messages = [];
+        } else{
+            $otherId = array_key_first($conversations);
+            $otherUser = $users[$otherId];
+            $messages = (new MessageManager())->findThread($_SESSION['user_id'], $otherId);
+        }
+
+        $this->render('message/thread', ['title' => 'Messagerie', 'conversations' => $conversations, 'users' => $users, 'errors' => [], 'otherUser' => $otherUser, 'messages' => $messages]); 
+    }
+
+    private function getConversations(){
         $messageManager = new MessageManager();
 
         $messages = $messageManager->findConversations($_SESSION['user_id']);
@@ -68,6 +87,6 @@ class MessageController extends Controller{
             $users[$otherId] = $userManager->findById($otherId);
         }
 
-        $this->render('message/index', ['title' => 'Messagerie', 'conversations' => $conversations, 'users' => $users]); 
+        return [$conversations, $users];
     }
 }
