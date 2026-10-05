@@ -138,8 +138,14 @@ class BookController extends Controller{
     }
 
     public function index(){
+        $search = trim($_GET['search'] ?? '');
         $bookManager = new BookManager();
-        $books = $bookManager->findAll();
+        
+        if($search === ''){
+            $books = $bookManager->findAll();
+        } else{
+            $books = $bookManager->findByTitle($search);
+        }
 
         $userManager = new UserManager();
         $owners = [];
@@ -150,6 +156,6 @@ class BookController extends Controller{
             }
         }
 
-        $this->render('book/index', ['title' => 'Nos livres à l\'échange', 'books' => $books, 'owners' => $owners]);
+        $this->render('book/index', ['title' => 'Nos livres à l\'échange', 'books' => $books, 'owners' => $owners, 'search' => $search]);
     }
 }
