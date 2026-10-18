@@ -114,5 +114,12 @@ class BookController extends Controller{
         $bookManager->delete($id);
         header('Location: index.php?controller=account&action=index');
         exit;
-    }   
+    }
+    
+    public function index(){
+        $bookManager = new BookManager();
+        $books = $bookManager->findAll();
+
+        $this->render('book/index', ['title' => 'Nos livres à l\'échange', 'books' => $books]);
+    }
 }
