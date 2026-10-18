@@ -64,4 +64,17 @@ class BookManager extends Manager{
             'id' => $id
         ]);
     }
+
+    public function findAll() : array{
+        $stmt = $this->db->query("SELECT * FROM books");
+
+        $books = [];
+        $rows = $stmt->fetchAll();
+
+        foreach($rows as $row){
+            $books[] = new Book($row);
+        }
+
+        return $books;
+    }
 }
