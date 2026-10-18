@@ -57,4 +57,11 @@ class BookManager extends Manager{
             'id' => $book->getId()
         ]);
     }
+
+    public function delete(int $id) : void{
+        $stmt = $this->db->prepare("DELETE FROM books WHERE id = :id");
+        $stmt->execute([
+            'id' => $id
+        ]);
+    }
 }
