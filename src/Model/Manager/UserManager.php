@@ -58,4 +58,14 @@ class UserManager extends Manager{
         $user = new User($row);
         return $user;
     }
+
+    public function update(User $user) : void{
+        $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, password = :password WHERE id = :id");
+        $stmt->execute([
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'id' => $user->getId()
+        ]);
+    }
 }
