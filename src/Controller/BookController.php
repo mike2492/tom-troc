@@ -47,4 +47,21 @@ class BookController extends Controller{
 
         $this->render('book/form', ['title' => 'Ajouter un livre', 'errors' => $errors]);
     }
+
+    public function edit(){
+        $this->requireLogin();
+        $id = (int) ($_GET['id'] ?? 0);
+
+        $bookManager = new BookManager();
+        $book = $bookManager->findById($id);
+
+        if($book === null || $book->getUserId() !== $_SESSION['user_id']){
+            header('Location: index.php?controller=account&action=index');
+            exit;
+        }
+
+        $errors = [];
+        
+        $this->render('book/form', ['title' => 'Modifier les informations', 'book' => $book, 'errors' => $errors]);
+    }
 }
