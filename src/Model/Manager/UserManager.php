@@ -42,4 +42,20 @@ class UserManager extends Manager{
             'password' => $user->getPassword()
         ]);
     }
+
+    public function findById(int $id) : ?User{
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute([
+            'id' => $id
+        ]);
+
+        $row = $stmt->fetch();
+
+        if($row === false){
+            return null;
+        }
+
+        $user = new User($row);
+        return $user;
+    }
 }
