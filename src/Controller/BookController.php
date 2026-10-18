@@ -61,6 +61,40 @@ class BookController extends Controller{
         }
 
         $errors = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $title = trim($_POST['title'] ?? '');
+            $author = trim($_POST['author'] ?? '');
+            $description = $_POST['description'] ?? '';
+            $status = $_POST['status'] ?? '';
+
+            if($title === ''){
+                $errors['title'] = "Titre requis";
+            }
+
+            if($author === ''){
+                $errors['author'] = "Auteur requis";
+            }
+
+            if($description === ''){
+                $errors['description'] = "Description requise";
+            }
+
+            if(!in_array($status, ['available', 'unavailable'], true)){
+                $errors['status'] = "Disponibilité non valide";
+            }
+
+            if(empty($errors)){
+                $book->setTitle($title);
+                $book->setAuthor($author);
+                $book->setDescription($description);
+                $book->setStatus($status);
+
+                $bookManager->update($book);
+                header('Location: index.php?controller=account&action=index');
+                exit;
+            }
+        }
         
         $this->render('book/form', ['title' => 'Modifier les informations', 'book' => $book, 'errors' => $errors]);
     }
