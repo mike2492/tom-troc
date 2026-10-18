@@ -73,8 +73,8 @@ if($interval->y >= 1){
                         <?php endif; ?>
                     </td>
                     <td>
-                        <a href="">Editer</a>
-                        <a href="">Supprimer</a>
+                        <a href="index.php?controller=book&action=edit&id=<?= $book->getId() ?>">Editer</a>
+                        <a href="index.php?controller=book&action=delete&id=<?= $book->getId() ?>">Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
