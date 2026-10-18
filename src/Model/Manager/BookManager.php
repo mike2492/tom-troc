@@ -77,4 +77,20 @@ class BookManager extends Manager{
 
         return $books;
     }
+
+    public function searchByTitle(string $search) : array{
+        $stmt = $this->db->prepare("SELECT * FROM books WHERE title LIKE :search");
+        $stmt->execute([
+            'search' => '%' . $search . '%'
+        ]);
+
+        $books = [];
+        $rows = $stmt->fetchAll();
+
+        foreach($rows as $row){
+            $books[] = new Book($row);
+        }
+
+        return $books;
+    }
 }
