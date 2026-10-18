@@ -11,12 +11,21 @@
     <div>
         <label for="title">Titre</label>
         <input type="text" name="title" id="title">
+        <?php if(isset($errors['title'])): ?>
+            <p><?= htmlspecialchars($errors['title']) ?></p>
+        <?php endif; ?>
 
         <label for="author">Auteur</label>
         <input type="text" name="author" id="author">
+        <?php if(isset($errors['author'])): ?>
+            <p><?= htmlspecialchars($errors['author']) ?></p>
+        <?php endif; ?>
 
         <label for="description">Commentaire</label>
         <textarea name="description" id="description"></textarea>
+        <?php if(isset($errors['description'])): ?>
+            <p><?= htmlspecialchars($errors['description']) ?></p>
+        <?php endif; ?>
 
         <label for="status">Disponibilité</label>
 
@@ -24,6 +33,9 @@
             <option value="available">Disponible</option>
             <option value="unavailable">Non disponible</option>
         </select>
+        <?php if(isset($errors['status'])): ?>
+            <p><?= htmlspecialchars($errors['status']) ?></p>
+        <?php endif; ?>
 
         <button type="submit">Valider</button>
     </div>
