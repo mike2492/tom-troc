@@ -33,4 +33,13 @@ class UserManager extends Manager{
         $user = new User($row);
         return $user;
     }
+
+    public function create(User $user) : void{
+        $stmt = $this->db->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+        $stmt->execute([
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword()
+        ]);
+    }
 }
