@@ -9,4 +9,11 @@ abstract class Controller{
 
         require __DIR__ . '/../View/layout.php';
     }
+
+    protected function requireLogin(){
+        if(!isset($_SESSION['user_id'])){
+            header('Location: index.php?controller=auth&action=login');
+            exit;
+        }
+    }
 }
