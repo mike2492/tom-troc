@@ -2,7 +2,6 @@
 
 class BookManager extends Manager{
 
-
     public function findByUserId(int $userId) : array{
         $stmt = $this->db->prepare("SELECT * FROM books WHERE user_id = :user_id");
         $stmt->execute([
@@ -17,5 +16,17 @@ class BookManager extends Manager{
         }
 
         return $books;
+    }
+
+    public function create(Book $book) : void{
+        $stmt = $this->db->prepare("INSERT INTO books (title, author, description, image, status, user_id) VALUES (:title, :author, :description, :image, :status, :user_id)");
+        $stmt->execute([
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'description' => $book->getDescription(),
+            'image' => $book->getImage(),
+            'status' => $book->getStatus(),
+            'user_id' => $book->getUserId()
+        ]);
     }
 }
