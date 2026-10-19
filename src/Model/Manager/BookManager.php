@@ -79,6 +79,7 @@ class BookManager extends Manager{
     }
 
     public function searchByTitle(string $search) : array{
+        $search = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
         $stmt = $this->db->prepare("SELECT * FROM books WHERE title LIKE :search");
         $stmt->execute([
             'search' => '%' . $search . '%'
