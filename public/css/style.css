@@ -288,3 +288,73 @@ footer img{
     display: flex;
     justify-content: end;
 }
+
+.exchange{
+    background-color: #FAF9F7;
+    padding: 130px 0px 80px 0px;
+}
+
+.exchange-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exchange-top > h1{
+    margin: 0;
+    font-size: 36px;
+    font-weight: 400;
+    font-family: "Playfair Display";
+}
+
+.exchange-top > form{
+    width: 35%;
+}
+
+.exchange-top > form > input{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 6px;
+    background-image: url("../images/union.png");
+    background-repeat: no-repeat;
+    background-position: 16px center;
+    font-size: 14px;
+    font-family: "Inter";
+    padding-left: 48px;
+    box-sizing: border-box;
+}
+
+.exchange-top > form > input:focus{
+    outline: none;
+}
+
+.books-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 38px;
+    justify-content: center;
+    padding: 72px 0px 0px 0px;
+}
+
+.books-grid > a{
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.book-card{
+    position: relative;
+}
+
+.badge{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 500;
+    font-family: "Inter";
+    background-color: #C56D6D;
+    padding: 4px 14px;
+    border-radius: 30px;
+}
