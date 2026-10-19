@@ -66,7 +66,7 @@ class BookManager extends Manager{
     }
 
     public function findAll() : array{
-        $stmt = $this->db->query("SELECT * FROM books");
+        $stmt = $this->db->query("SELECT * FROM books ORDER BY created_at DESC, id DESC");
 
         $books = [];
         $rows = $stmt->fetchAll();
@@ -80,7 +80,7 @@ class BookManager extends Manager{
 
     public function searchByTitle(string $search) : array{
         $search = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
-        $stmt = $this->db->prepare("SELECT * FROM books WHERE title LIKE :search");
+        $stmt = $this->db->prepare("SELECT * FROM books WHERE title LIKE :search ORDER BY create_at DESC, id DESC");
         $stmt->execute([
             'search' => '%' . $search . '%'
         ]);
