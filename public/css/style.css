@@ -460,3 +460,86 @@ footer img{
     text-decoration: none;
     color: #A6A6A6;
 }
+
+.auth{
+    display: flex;
+    background-color: #FAF9F7;
+}
+
+.auth__form{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth__form > h1{
+    font-size: 36px;
+    font-family: "Playfair Display";
+    font-weight: 400;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 56px;
+}
+
+.auth__form > form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth__form > form > label{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+    color: #A6A6A6;
+    width: 53%;   
+}
+
+.auth__form > form > input{
+    height: 50px;
+    border: 1px solid #F0F0F0;
+    border-radius: 6px;
+    width: 53%;
+    margin: 10px 0px 32px 0px;
+}
+
+.auth__form > form > input:focus{
+    outline: none;
+}
+
+.auth__form > form > button{
+    width: 53%;
+    border: none;
+    border-radius: 10px;
+    background-color: #00AC66;
+    height: 63px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+}
+
+.auth__image{
+    width: 50%;
+}
+
+.auth__image > img{
+    width: 100%;
+}
+
+.no-account{
+    width: 82%;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+    text-align: center;
+    padding-top: 40px;
+}
+
+.no-account > a{
+    text-decoration: underline;
+    color: #292929;
+}
