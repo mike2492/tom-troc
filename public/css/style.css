@@ -62,3 +62,229 @@ footer a, footer span{
 footer img{
     padding-right: 23px;
 }
+
+.hero{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 108px;
+}
+
+.hero-text{
+    width: 36%;
+}
+
+.hero__image{
+    width: 44%;
+}
+
+.hero__image > img{
+    width: 100%;
+}
+
+.hero-text > h1{
+    font-size: 36px;
+    font-family: "Playfair Display";
+    font-weight: 400;
+    color: #000;
+}
+
+.hero-text > p {
+    font-size: 16px;
+    font-family: "Inter";
+    font-weight: 300;
+    color: #000;
+}
+
+.hero-text > a{
+    width: 152px;
+    height: 63px;
+    background-color: #00AC66;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+}
+
+.hero-section{
+    background-color: #F5F3EF;
+    padding: 80px 0px 128px 0px;
+}
+
+.latest-books{
+    background-color: #FAF9F7;
+    padding: 80px 0px 64px 0px;
+}
+
+.books-list{
+    display: flex;
+    justify-content: center;
+    gap: 38px;
+    padding: 80px 0px 48px 0px;
+}
+
+.latest-books > .container > h2{
+    font-size: 32px;
+    font-family: "Playfair Display";
+    font-weight: 400;
+    text-align: center;
+    margin: 0;
+}
+
+.books-list > a{
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.book-card > h3, .book-card > p{
+    padding-left: 14px;
+}
+
+.book-title{
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    font-family: "Inter";
+}
+
+.book-author{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+    color: #A6A6A6;
+}
+
+.book-owner{
+    font-size: 10px;
+    font-style: italic;
+    font-family: "Inter";
+    font-weight: 400;
+    color: #A6A6A6;
+}
+
+.books-action{
+    display: flex;
+    justify-content: center;
+}
+
+.books-action > a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 218px;
+    height: 63px;
+    background-color: #00AC66;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+}
+
+.how-it-works{
+    background-color: #F5F3EF;
+    padding: 80px 0px 80px 0px;
+}
+
+.how-it-works > .container > h2{
+    margin: 0;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 400;
+    font-family: "Playfair Display";
+}
+
+.how-it-works > .container > p{
+    text-align: center;
+    font-size: 16px;
+    font-family: "Inter";
+    font-weight: 300;
+    width: 43%;
+    margin: 0 auto;
+    padding: 24px 0px 0px 0px;
+}
+
+.steps{
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    padding: 40px 0px 48px 0px;
+}
+
+.step{
+    height: 139px;
+    background-color: #fff;
+    width: 23%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-family: "Inter";
+    font-weight: 400;
+}
+
+.step > p{
+    width: 179px;
+    text-align: center;
+}
+
+.books-action > .btn-books-2{
+    background-color: #F5F3EF;
+    border: 1px solid #00AC66;
+    color: #00AC66;
+}
+
+.banner > img{
+    max-width: 100%;
+    object-fit: cover;
+    display: flex;
+}
+
+.values{
+    background-color: #F5F3EF;
+    padding: 80px 0px 80px 0px;
+}
+
+.values > .container > h2{
+    font-size: 32px;
+    font-family: "Playfair Display";
+    font-weight: 400;
+}
+
+.values > .container > p{
+    font-size: 16px;
+    font-weight: 300;
+    font-family: "Inter";
+    color: #292929;
+}
+
+.values > .container > .team-tomtroc{
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    font-family: "Inter";
+    color: #A6A6A6;
+}
+
+.values-content{
+    width: 32%;
+    display: flex;
+    flex-direction: column;
+}
+
+.values-content > img{
+    width: 100%;
+}
+
+.values-img{
+    display: flex;
+    justify-content: end;
+}
