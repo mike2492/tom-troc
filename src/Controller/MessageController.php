@@ -20,6 +20,13 @@ class MessageController extends Controller{
             }
         }
 
-        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations]);
+        $userManager = new UserManager();
+        $contacts = [];
+        foreach(array_keys($conversations) as $contactId){
+            $contacts[$contactId] = $userManager->findById($contactId);
+        }
+
+
+        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations, 'contacts' => $contacts]);
     }
 }
