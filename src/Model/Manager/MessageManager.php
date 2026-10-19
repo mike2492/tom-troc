@@ -32,4 +32,20 @@ class MessageManager extends Manager{
 
         return $messages;
     }
+
+    public function findByUserId(int $userId) : array{
+        $stmt = $this->db->prepare("SELECT * FROM messages WHERE sender_id = :sender_id OR receiver_id = :receiver_id ORDER BY sent_at DESC");
+        $stmt->execute([
+            'sender_id' => $userId,
+            'receiver_id' => $userId
+        ]);
+
+        $messages = [];
+        $rows = $stmt->fetchAll();
+        foreach($rows as $row){
+            $messages[] = new Message($row);
+        }
+
+        return $messages;
+    }
 }
