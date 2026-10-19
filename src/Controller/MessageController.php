@@ -6,6 +6,20 @@ class MessageController extends Controller{
         $this->requireLogin();
         $messageManager = new MessageManager();
         $messages = $messageManager->findByUserId($_SESSION['user_id']);
-        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages]);
+
+        $conversations = [];
+        foreach($messages as $message){
+            if($message->getSenderId() === $_SESSION['user_id']){
+                $otherId = $message->getReceiverId();
+            } else{
+                $otherId = $message->getSenderId();
+            }
+
+            if(!isset($conversations[$otherId])){
+                $conversations[$otherId] = $message;
+            }
+        }
+
+        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations]);
     }
 }
