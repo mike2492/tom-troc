@@ -19,6 +19,9 @@ if($interval->y >= 1){
 <p>Bibliothèque</p>
 <span><?= count($books) ?> livres</span>
 
+<a href="index.php?controller=message&action=index&id=<?= $user->getId() ?>">Écrire un message</a>
+
+
 <?php if(empty($books)): ?>
     <p>Aucun livre dans cette bibliothèque</p>
 <?php else: ?>
