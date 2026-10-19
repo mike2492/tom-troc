@@ -142,4 +142,20 @@ class BookController extends Controller{
 
         $this->render('book/index', ['title' => 'Nos livres à l\'échange', 'books' => $books, 'owners' => $owners, 'search' => $search]);
     }
+
+    public function show(){
+        $id = (int) ($_GET['id'] ?? 0);
+        $bookManager = new BookManager();
+
+        $book = $bookManager->findById($id);
+        if($book === null){
+            header('Location: index.php?controller=book&action=index');
+            exit;
+        }
+
+        $userManager = new UserManager();
+        $owner = $userManager->findById($book->getUserId());
+
+        $this->render('book/show', ['title' => $book->getTitle(), 'book' => $book, 'owner' => $owner]);
+    }
 }
