@@ -12,72 +12,78 @@ if($interval->y >= 1){
 }
 ?>
 
-<h1>Mon compte</h1>
+<section class="account">
+    <div class="container">
+        <h1>Mon compte</h1>
 
-<p><?= htmlspecialchars($user->getUsername()) ?></p>
-<p>Membre depuis <?= $since ?></p>
-<p>Bibliothèque</p>
-<span><?= count($books) ?> livres</span>
+        <div class="account__top">
+            <div class="account__card">
+                <div class="account-img">
+                    <img src="https://picsum.photos/135/135" alt="">
+                    <a href="">modifier</a>
+                </div>
+                
+                <hr>
 
-<h2>Vos informations personnelles</h2>
+                <div class="account-info">
+                    <p class="info-username"><?= htmlspecialchars($user->getUsername()) ?></p>
+                    <p class="info-since">Membre depuis <?= $since ?></p>
+                    <p class="info-library">Bibliothèque</p>
+                    <span class="info-books"><?= count($books) ?> livres</span>
+                </div>
+            </div>
 
-<form action="" method="POST">
-    <label for="email">Adresse email</label>
-    <input type="email" name="email" id="email" value="<?= htmlspecialchars($user->getEmail()) ?>">
-    <?php if(isset($errors['email'])): ?>
-        <p><?= htmlspecialchars($errors['email']) ?></p>
-    <?php endif; ?>
-    
+            <div class="account__form">
+                <h2>Vos informations personnelles</h2>
+                <form action="" method="POST">
+                    <label for="email">Adresse email</label>
+                    <input type="email" name="email" id="email" value="<?= htmlspecialchars($user->getEmail()) ?>">
 
-    <label for="password">Mot de passe</label>
-    <input type="password" name="password" id="password">
-    <?php if(isset($errors['password'])): ?>
-        <p><?= htmlspecialchars($errors['password']) ?></p>
-    <?php endif; ?>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" name="password" id="password">
 
-    <label for="username">Pseudo</label>
-    <input type="text" name="username" id="username" value="<?= htmlspecialchars($user->getUsername()) ?>">
-    <?php if(isset($errors['username'])): ?>
-        <p><?= htmlspecialchars($errors['username']) ?></p>
-    <?php endif; ?>
-    
-    <button type="submit">Enregistrer</button>
-</form>
+                    <label for="username">Pseudo</label>
+                    <input type="text" name="username" id="username" value="<?= htmlspecialchars($user->getUsername()) ?>">
 
-<?php if(empty($books)): ?>
-    <p>Aucun livre dans votre bibliothèque</p>
-<?php else: ?>
-    <table>
-        <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Description</th>
-                <th>Disponibilité</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($books as $book): ?>
+                    <div class="account-btn">
+                        <button type="submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table>
+            <thead>
                 <tr>
-                    <td></td>
-                    <td><?= htmlspecialchars($book->getTitle()) ?></td>
-                    <td><?= htmlspecialchars($book->getAuthor()) ?></td>
-                    <td><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?></td>
-                    <td>
-                        <?php if($book->getStatus() === 'available'): ?>
-                            <span>disponible</span>
-                        <?php else: ?>
-                            <span>non dispo</span>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <a href="index.php?controller=book&action=edit&id=<?= $book->getId() ?>">Editer</a>
-                        <a href="index.php?controller=book&action=delete&id=<?= $book->getId() ?>">Supprimer</a>
-                    </td>
+                    <th>Photo</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Description</th>
+                    <th>Disponibilité</th>
+                    <th>Action</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php endif; ?>
+            </thead>
+            <tbody>
+                <?php foreach($books as $book): ?>
+                    <tr>
+                        <td><img src="https://picsum.photos/78/78" alt=""></td>
+                        <td><?= htmlspecialchars($book->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($book->getAuthor()) ?></td>
+                        <td class="italic-description"><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?><?= mb_strlen($book->getDescription()) > 100 ? '...' : '' ?></td>
+                        <td>
+                            <?php if($book->getStatus() === 'available'): ?>
+                                <span class="dispo">disponible</span>
+                            <?php else: ?>
+                                <span class="no-dispo">non dispo</span>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <a href="index.php?controller=book&action=edit&id=<?= $book->getId() ?>" class="edit-link">Editer</a>
+                            <a href="index.php?controller=book&action=delete&id=<?= $book->getId() ?>" class="delete-link">Supprimer</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
