@@ -26,7 +26,20 @@ class MessageController extends Controller{
             $contacts[$contactId] = $userManager->findById($contactId);
         }
 
+        $id = (int) ($_GET['id'] ?? 0);
+        $thread = [];
+        $selected = null;
 
-        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations, 'contacts' => $contacts]);
+        if($id > 0){
+            $user = $userManager->findById($id);
+            if($user !== null && $user->getId() !== $_SESSION['user_id']){
+                $selected = $user;
+                $thread = $messageManager->findConversation($_SESSION['user_id'], 
+                $id);
+            }
+        }
+
+
+        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations, 'contacts' => $contacts, 'thread' => $thread, 'selected' => $selected]);
     }
 }
