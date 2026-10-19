@@ -51,4 +51,20 @@ class AccountController extends Controller{
 
         $this->render('account/index', ['title' => 'Mon compte', 'user' => $user, 'books' => $books, 'errors' => $errors]);
     }
+
+    public function show(){
+        $id = (int) ($_GET['id'] ?? 0);
+        $userManager = new UserManager();
+
+        $user = $userManager->findById($id);
+        if($user === null){
+            header('Location: index.php?controller=book&action=index');
+            exit;
+        }
+
+        $bookManager = new BookManager();
+        $books = $bookManager->findByUserId($id);
+
+        $this->render('account/show', ['title' => $user->getUsername(), 'user' => $user, 'books' => $books]);
+    }
 }
