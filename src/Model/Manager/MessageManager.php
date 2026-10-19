@@ -10,4 +10,26 @@ class MessageManager extends Manager{
             'content' => $message->getContent()
         ]);
     }
+
+    public function findConversation(int $userId, int $otherId) : array{
+        $stmt = $this->db->prepare("SELECT * FROM messages
+        WHERE (sender_id = :user_id1 AND receiver_id = :other_id1)
+        OR (sender_id = :other_id2 AND receiver_id = :user_id2)
+        ORDER BY sent_at ASC");
+        $stmt->execute([
+            'user_id1' => $userId,
+            'other_id1' => $otherId,
+            'user_id2' => $userId,
+            'other_id2' => $otherId
+        ]);
+
+        $messages = [];
+        $rows = $stmt->fetchAll();
+
+        foreach($rows as $row){
+            $messages[] = new Message($row);
+        }
+
+        return $messages;
+    }
 }
