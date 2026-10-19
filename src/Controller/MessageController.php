@@ -34,8 +34,23 @@ class MessageController extends Controller{
             $user = $userManager->findById($id);
             if($user !== null && $user->getId() !== $_SESSION['user_id']){
                 $selected = $user;
-                $thread = $messageManager->findConversation($_SESSION['user_id'], 
-                $id);
+                if($_SERVER['REQUEST_METHOD'] === 'POST'){
+                    $content = trim($_POST['content'] ?? '');
+
+                    if($content !== ''){
+                        $newMessage = new Message([
+                            'sender_id' => $_SESSION['user_id'],
+                            'receiver_id' => $id,
+                            'content' => $content
+                        ]);
+
+                        $messageManager->create($newMessage);
+                        header('Location: index.php?controller=message&action=index&id=' . $id);
+                        exit;
+                    }
+                }
+
+                $thread = $messageManager->findConversation($_SESSION['user_id'], $id);
             }
         }
 
