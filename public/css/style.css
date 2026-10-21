@@ -82,6 +82,16 @@ footer img{
     width: 100%;
 }
 
+.hero__image > span{
+    display: flex;
+    justify-content: end;
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    font-family: "Inter";
+    color: #A6A6A6;
+}
+
 .hero-text > h1{
     font-size: 36px;
     font-family: "Playfair Display";
@@ -934,6 +944,7 @@ tbody tr td:last-child{
     background-color: #EDF2F6;
     border: 1px solid #F0F0F0;
     border-radius: 6px;
+    resize: none;
 }
 
 .book-form__fields > input:focus, .book-form__fields > textarea:focus{
@@ -949,5 +960,152 @@ tbody tr td:last-child{
     color: #fff;
     font-size: 16px;
     font-weight: 600;
+    font-family: "Inter";
+}
+
+.messaging{
+    background-color: #F5F3EF;
+    min-height: 100vh;
+}
+
+.messaging__inner{
+    display: flex;
+    gap: 44px;
+    min-height: 100vh;
+}
+
+.messaging__list{
+    width: 33%;
+    background-color: #FAF9F7;
+}
+
+.messaging__list > h1{
+    margin: 0;
+    padding: 70px 34px 40px 34px;
+    font-size: 26px;
+    font-weight: 400;
+    font-family: "Playfair Display";
+}
+
+.messaging__contact{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0px 34px;
+    height: 84px;
+    text-decoration: none;
+    color: #292929;
+}
+
+.messaging__contact > img{
+    border-radius: 50%;
+}
+
+.messaging__content{
+    flex: 1;
+}
+
+.messaging__top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.messaging__name{
+    margin: 0px 0px 10px 0px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+}
+
+.messaging__time{
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Inter";
+}
+
+.messaging__preview{
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Inter";
+    color: #A6A6A6;
+}
+
+.messaging__time, .messaging__preview{
+    margin: 0;
+}
+
+.messaging__thread{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.messaging__messages{
+    display: flex;
+    flex-direction: column;
+}
+
+.messaging__message--sent{
+    align-self: flex-end;
+}
+
+.messaging__message--received{
+    align-self: flex-start;
+}
+
+.messaging__header{
+    display: flex;
+    gap: 12px;
+}
+
+.messaging__header > img{
+    border-radius: 50%;
+}
+
+.messaging__header > h2{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: "Inter";
+}
+
+.messaging__form{
+    display: flex;
+    gap: 21px;
+}
+
+.messaging__form > input{
+    height: 49px;
+    border: 1px solid #F0F0F0;
+    background-color: #fff;
+    border-radius: 6px;
+    width: 75%;
+}
+
+.messaging__form > input:focus{
+    outline: none;
+}
+
+.messaging__form > button{
+    border: none;
+    background-color: #00AC66;
+    border-radius: 10px;
+    color: #fff;
+    width: 25%;
+    font-size: 16px;
+    font-family: "Inter";
+    font-weight: 600;
+}
+
+.messaging__date{
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "Inter";
+    color: #A6A6A6;
+}
+
+.messaging__text{
+    font-size: 12px;
+    font-weight: 400;
     font-family: "Inter";
 }
