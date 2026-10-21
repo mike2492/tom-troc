@@ -12,37 +12,45 @@ if($interval->y >= 1){
 }
 ?>
 
-<h1><?= htmlspecialchars($user->getUsername()) ?></h1>
+<section class="account-public">
+    <div class="container public-row">
+        <div class="account__card">
+            <div class="account-img">
+                <img src="https://picsum.photos/135/135" alt="">
+            </div>
 
-<p>Membre depuis : <?= $since ?></p>
+            <hr>
 
-<p>Bibliothèque</p>
-<span><?= count($books) ?> livres</span>
+             <div class="account-info">
+                <p class="info-username"><?= htmlspecialchars($user->getUsername()) ?></p>
+                <p class="info-since">Membre depuis <?= $since ?></p>
+                <p class="info-library">Bibliothèque</p>
+                <span class="info-books"><?= count($books) ?> livres</span>
+                <a href="index.php?controller=message&action=index&id=<?= $user->getId() ?>">Ecrire un message</a>
+            </div>
+        </div>
 
-<a href="index.php?controller=message&action=index&id=<?= $user->getId() ?>">Écrire un message</a>
-
-
-<?php if(empty($books)): ?>
-    <p>Aucun livre dans cette bibliothèque</p>
-<?php else: ?>
-    <table>
-        <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($books as $book): ?>
+        <table>
+            <thead>
                 <tr>
-                    <td></td>
-                    <td><?= htmlspecialchars($book->getTitle()) ?></td>
-                    <td><?= htmlspecialchars($book->getAuthor()) ?></td>
-                    <td><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?></td>
+                    <th>Photo</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Description</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php endif; ?>
+            </thead>
+            <tbody>
+                <?php foreach($books as $book): ?>
+                    <tr>
+                        <td><img src="https://picsum.photos/78/78" alt=""></td>
+                        <td><?= htmlspecialchars($book->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($book->getAuthor()) ?></td>
+                        <td class="italic-description"><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?><?= mb_strlen($book->getDescription()) > 100 ? '...' : '' ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+</section>
