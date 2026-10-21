@@ -1072,6 +1072,7 @@ tbody tr td:last-child{
 .messaging__form{
     display: flex;
     gap: 21px;
+    padding-bottom: 98px;
 }
 
 .messaging__form > input{
