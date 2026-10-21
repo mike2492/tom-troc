@@ -1054,6 +1054,29 @@ tbody tr td:last-child{
     align-self: flex-start;
 }
 
+.messaging__message--received > .messaging__text{
+    height: 37px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.messaging__message--sent > .messaging__text{
+    height: 37px;
+    background-color: #EDF2F6;
+    border-radius: 3px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.messaging__message--sent > .messaging__date{
+    display: flex;
+    justify-content: end;
+}
+
 .messaging__header{
     display: flex;
     gap: 12px;
