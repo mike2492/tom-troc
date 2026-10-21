@@ -7,6 +7,7 @@
         </div>
         <div class="hero__image">
             <img src="images/bibliotheque.png" alt="">
+            <span>Hamza</span>
         </div>
     </div>
 </section>
