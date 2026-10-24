@@ -29,7 +29,7 @@ if($interval->y >= 1){
                     <p class="info-username"><?= htmlspecialchars($user->getUsername()) ?></p>
                     <p class="info-since">Membre depuis <?= $since ?></p>
                     <p class="info-library">Bibliothèque</p>
-                    <span class="info-books"><?= count($books) ?> livres</span>
+                    <span class="info-books"><img src="images/book.svg" alt=""><?= count($books) ?> livres</span>
                 </div>
             </div>
 
