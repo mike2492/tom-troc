@@ -28,7 +28,7 @@
                 <div class="messaging__messages">
                     <?php foreach($thread as $msg): ?>
                         <div class="messaging__message <?= $msg->getSenderId() === $_SESSION['user_id'] ? 'messaging__message--sent' : 'messaging__message--received' ?>">
-                            <p class="messaging__date"><?= (new DateTimeImmutable($msg->getSentAt()))->format('d.m H:i') ?></p>
+                            <p class="messaging__date"><img src="https://picsum.photos/48/48" alt=""><?= (new DateTimeImmutable($msg->getSentAt()))->format('d.m H:i') ?></p>
                             <p class="messaging__text"><?= htmlspecialchars($msg->getContent()) ?></p>
                         </div>
                     <?php endforeach; ?>
