@@ -34,7 +34,20 @@ if($interval->y >= 1){
             </div>
 
             <div class="account__form">
+
+            
                 <h2>Vos informations personnelles</h2>
+
+                <div class="errors">
+                    <?php if(isset($errors['email'])): ?>
+                        <p class="error">* <?= $errors['email'] ?></p>
+                    <?php endif; ?>
+
+                    <?php if(isset($errors['username'])): ?>
+                        <p class="error">* <?= $errors['username'] ?></p>
+                    <?php endif; ?>
+                </div>
+
                 <form action="" method="POST">
                     <label for="email">Adresse email</label>
                     <input type="email" name="email" id="email" value="<?= htmlspecialchars($user->getEmail()) ?>">
