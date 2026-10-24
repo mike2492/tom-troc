@@ -1083,6 +1083,25 @@ tbody tr td:last-child{
 .messaging__message--sent > .messaging__date{
     display: flex;
     justify-content: end;
+    width: 100%;
+    padding: 1% 10%;
+}
+
+.messaging__message--sent > .messaging__date > img{
+    display: none;
+}
+
+.messaging__message--received > .messaging__date > img{
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+}
+
+.messaging__message--received > .messaging__date{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .messaging__header{
