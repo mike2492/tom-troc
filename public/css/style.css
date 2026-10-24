@@ -709,6 +709,8 @@ footer img{
     font-size: 14px;
     font-weight: 400;
     font-family: "Inter";
+    display: flex;
+    gap: 5px;
 }
 
 table{
@@ -1138,6 +1140,7 @@ tbody tr td:last-child{
     font-size: 12px;
     font-weight: 400;
     font-family: "Inter";
+    padding: 1% 10%;
 }
 
 .errors{
