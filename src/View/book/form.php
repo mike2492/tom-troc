@@ -3,32 +3,26 @@
         <a href="index.php?controller=account&action=index" class="book-form__back">← retour</a>
         <h1><?= htmlspecialchars($title) ?></h1>
 
-        <form action="" method="POST" enctype="multipart/form-data" class="book-form__card">
+        <div class="book-form__card">
             <div class="book-form__photo">
                 <p class="book-form__label">Photo</p>
-                <img src="https://picsum.photos/488/488" alt="">
-                <label for="image">Modifier la photo</label>
-                <input type="file" name="image" id="image">
+                <?php if(isset($book) && $book->getImage() !== null): ?>
+                    <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
+                <?php else: ?>
+                    <img src="https://picsum.photos/488/488" alt="">
+                <?php endif; ?>
+                <form action="" method="POST" enctype="multipart/form-data">
+                     <label for="image">Modifier la photo</label>
+                    <input type="file" name="image" id="image" onchange="this.form.submit()">
+                </form>
             </div>
 
-            <div class="book-form__fields">
+            <form action="" method="POST" class="book-form__fields">
 
                 <div class="errors">
-                    <?php if(isset($errors['title'])): ?>
-                        <p class="error">* <?= $errors['title'] ?></p>
-                    <?php endif; ?>
-
-                    <?php if(isset($errors['author'])): ?>
-                        <p class="error">* <?= $errors['author'] ?></p>
-                    <?php endif; ?>
-
-                    <?php if(isset($errors['description'])): ?>
-                        <p class="error">* <?= $errors['description'] ?></p>
-                    <?php endif; ?>
-
-                    <?php if(isset($errors['status'])): ?>
-                        <p class="error">* <?= $errors['status'] ?></p>
-                    <?php endif; ?>
+                    <?php foreach($errors as $error): ?>
+                        <p class="error"><?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
                 </div>
 
                 <label for="title">Titre</label>
@@ -49,7 +43,7 @@
                 </select>
 
                 <button type="submit">Valider</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </section>

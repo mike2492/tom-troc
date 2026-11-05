@@ -17,7 +17,11 @@
                         <?php if($book->getStatus() === 'unavailable'): ?>
                             <span class="badge">non dispo.</span>
                         <?php endif; ?>
-                        <img src="https://picsum.photos/200/200" alt="">
+                        <?php if($book->getImage() !== null): ?>
+                            <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
+                        <?php else: ?>
+                            <img src="https://picsum.photos/200/200" alt="">
+                        <?php endif; ?>
                         <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
                         <p class="book-owner">Vendu par : <?= htmlspecialchars($owners[$book->getId()]) ?></p>

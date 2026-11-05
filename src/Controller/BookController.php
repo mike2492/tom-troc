@@ -62,37 +62,78 @@ class BookController extends Controller{
 
         $errors = [];
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $title = trim($_POST['title'] ?? '');
-            $author = trim($_POST['author'] ?? '');
-            $description = $_POST['description'] ?? '';
-            $status = $_POST['status'] ?? '';
 
-            if($title === ''){
-                $errors['title'] = "Titre requis";
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])){
+            $file = $_FILES['image'];
+            
+            if($file['error'] !== UPLOAD_ERR_OK){
+                $errors['image'] = "Erreur lors de l'envoi de l'image";
+            } elseif($file['size'] > 2 * 1024 * 1024){
+                $errors['image'] = "Image trop lourde (2 Mo Maximum)";
+            } else{
+                $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+                $mime = mime_content_type($file['tmp_name']);
+
+                if(!isset($allowed[$mime])){
+                    $errors['image'] = "Format non autorisé (jpg, png, webp)";
+                } else{
+                    $newName = bin2hex(random_bytes(16)) . '.' . $allowed[$mime];
+                    move_uploaded_file($file['tmp_name'], __DIR__ . '/../../public/uploads/books/' . $newName);
+
+                    if($book->getImage() !== null){
+                        $oldFile = __DIR__ . '/../../public/uploads/books/' . $book->getImage();
+
+                        if(is_file($oldFile)){
+                            unlink($oldFile);
+                        }
+                    }
+
+                    $book->setImage($newName);
+                    $bookManager->update($book);
+                    header('Location: index.php?controller=account&action=index');
+                    exit;
+                }
             }
+        }
 
-            if($author === ''){
-                $errors['author'] = "Auteur requis";
-            }
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_FILES['image'])){
+        
+            if(isset($_POST['title'], $_POST['author'], $_POST['description'], $_POST['status']) && is_string($_POST['title']) && is_string($_POST['author']) && is_string($_POST['description']) && is_string($_POST['status'])){
 
-            if($description === ''){
-                $errors['description'] = "Description requise";
-            }
+                $title = trim($_POST['title']);
+                $author = trim($_POST['author']);
+                $description = $_POST['description'];
+                $status = $_POST['status'];
 
-            if(!in_array($status, ['available', 'unavailable'], true)){
-                $errors['status'] = "Disponibilité non valide";
-            }
+                if($title === ''){
+                    $errors['title'] = "Titre requis";
+                }
 
-            if(empty($errors)){
-                $book->setTitle($title);
-                $book->setAuthor($author);
-                $book->setDescription($description);
-                $book->setStatus($status);
+                if($author === ''){
+                    $errors['author'] = "Auteur requis";
+                }
 
-                $bookManager->update($book);
-                header('Location: index.php?controller=account&action=index');
-                exit;
+                if($description === ''){
+                    $errors['description'] = "Description requise";
+                }
+
+                if(!in_array($status, ['available', 'unavailable'], true)){
+                    $errors['status'] = "Disponibilité non valide";
+                }
+
+                if(empty($errors)){
+                    $book->setTitle($title);
+                    $book->setAuthor($author);
+                    $book->setDescription($description);
+                    $book->setStatus($status);
+
+                    $bookManager->update($book);
+                    header('Location: index.php?controller=account&action=index');
+                    exit;
+                }
+
+            } else{
+                $errors['form'] = "Formulaire invalide";
             }
         }
         

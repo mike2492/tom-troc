@@ -6,7 +6,11 @@
 
 <section class="book-detail">
     <div class="book-detail__image">
-        <img src="https://picsum.photos/720/863" alt="">
+        <?php if($book->getImage() !== null): ?>
+            <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
+        <?php else: ?>
+            <img src="https://picsum.photos/720/863" alt="">
+        <?php endif; ?>
     </div>
 
     <div class="book-detail__info">
@@ -19,7 +23,11 @@
 
         <h2>Propriétaire</h2>
         <a href="index.php?controller=account&action=show&id=<?= $owner->getId() ?>" class="book-detail__owner">
-            <img src="https://picsum.photos/48/48" alt="">
+            <?php if($owner->getAvatar() !== null): ?>
+                 <img src="uploads/avatars/<?= htmlspecialchars($owner->getAvatar()) ?>" alt="">
+            <?php else: ?>
+                <img src="https://picsum.photos/48/48" alt="">
+            <?php endif; ?>
             <span><?= htmlspecialchars($owner->getUsername()) ?></span>
         </a>
 
