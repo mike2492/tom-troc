@@ -19,8 +19,16 @@ if($interval->y >= 1){
         <div class="account__top">
             <div class="account__card">
                 <div class="account-img">
-                    <img src="https://picsum.photos/135/135" alt="">
-                    <a href="">modifier</a>
+                    <?php if($user->getAvatar() !== null): ?>
+                        <img src="uploads/avatars/<?= htmlspecialchars($user->getAvatar()) ?>" alt="">
+                    <?php else: ?>
+                        <img src="https://picsum.photos/135/135" alt="">
+                    <?php endif; ?>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <label for="avatar">modifier</label>
+                        <input type="file" name="avatar" id="avatar" onchange="this.form.submit()">
+                    </form>
+                    
                 </div>
                 
                 <hr>
@@ -39,13 +47,9 @@ if($interval->y >= 1){
                 <h2>Vos informations personnelles</h2>
 
                 <div class="errors">
-                    <?php if(isset($errors['email'])): ?>
-                        <p class="error">* <?= $errors['email'] ?></p>
-                    <?php endif; ?>
-
-                    <?php if(isset($errors['username'])): ?>
-                        <p class="error">* <?= $errors['username'] ?></p>
-                    <?php endif; ?>
+                    <?php foreach($errors as $error): ?>
+                        <p class="error">* <?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
                 </div>
 
                 <form action="" method="POST">
@@ -79,7 +83,13 @@ if($interval->y >= 1){
             <tbody>
                 <?php foreach($books as $book): ?>
                     <tr>
-                        <td><img src="https://picsum.photos/78/78" alt=""></td>
+                        <td>
+                            <?php if($book->getImage() !== null): ?>
+                                <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="" class="table-img">
+                            <?php else: ?>
+                                <img src="https://picsum.photos/78/78" alt="">
+                            <?php endif; ?>
+                        </td>
                         <td><?= htmlspecialchars($book->getTitle()) ?></td>
                         <td><?= htmlspecialchars($book->getAuthor()) ?></td>
                         <td class="italic-description"><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?><?= mb_strlen($book->getDescription()) > 100 ? '...' : '' ?></td>
@@ -98,5 +108,5 @@ if($interval->y >= 1){
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
+    </div> 
 </section>

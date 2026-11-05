@@ -16,7 +16,11 @@ if($interval->y >= 1){
     <div class="container public-row">
         <div class="account__card">
             <div class="account-img">
-                <img src="https://picsum.photos/135/135" alt="">
+                <?php if($user->getAvatar() !== null): ?>
+                    <img src="uploads/avatars/<?= htmlspecialchars($user->getAvatar()) ?>" alt="" class="table-img">
+                <?php else: ?>
+                    <img src="https://picsum.photos/135/135" alt="">
+                <?php endif; ?>
             </div>
 
             <hr>
@@ -42,7 +46,13 @@ if($interval->y >= 1){
             <tbody>
                 <?php foreach($books as $book): ?>
                     <tr>
-                        <td><img src="https://picsum.photos/78/78" alt=""></td>
+                        <td>
+                            <?php if($book->getImage() !== null): ?>
+                                <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
+                            <?php else: ?>
+                                <img src="https://picsum.photos/78/78" alt="">
+                            <?php endif; ?>
+                        </td>
                         <td><?= htmlspecialchars($book->getTitle()) ?></td>
                         <td><?= htmlspecialchars($book->getAuthor()) ?></td>
                         <td class="italic-description"><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?><?= mb_strlen($book->getDescription()) > 100 ? '...' : '' ?></td>
