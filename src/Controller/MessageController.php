@@ -29,24 +29,32 @@ class MessageController extends Controller{
         $id = (int) ($_GET['id'] ?? 0);
         $thread = [];
         $selected = null;
+        $errors = [];
 
         if($id > 0){
             $user = $userManager->findById($id);
             if($user !== null && $user->getId() !== $_SESSION['user_id']){
                 $selected = $user;
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-                    $content = trim($_POST['content'] ?? '');
 
-                    if($content !== ''){
-                        $newMessage = new Message([
-                            'sender_id' => $_SESSION['user_id'],
-                            'receiver_id' => $id,
-                            'content' => $content
-                        ]);
+                    if(isset($_POST['content']) && is_string($_POST['content'])){
+                        $content = trim($_POST['content']);
 
-                        $messageManager->create($newMessage);
-                        header('Location: index.php?controller=message&action=index&id=' . $id);
-                        exit;
+                        if($content === ''){
+                            $errors['content'] = "Le message ne peut pas être vide";
+                        } else{
+                            $newMessage = new Message([
+                                'sender_id' => $_SESSION['user_id'],
+                                'receiver_id' => $id,
+                                'content' => $content
+                            ]);
+
+                            $messageManager->create($newMessage);
+                            header('Location: index.php?controller=message&action=index&id=' . $id);
+                            exit;
+                        }
+                    } else {
+                        $errors['form'] = "Formulaire invalide";
                     }
                 }
 
@@ -55,6 +63,6 @@ class MessageController extends Controller{
         }
 
 
-        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations, 'contacts' => $contacts, 'thread' => $thread, 'selected' => $selected]);
+        $this->render('message/index', ['title' => 'Messagerie', 'messages' => $messages, 'conversations' => $conversations, 'contacts' => $contacts, 'thread' => $thread, 'selected' => $selected, 'errors' => $errors]);
     }
 }
