@@ -3,17 +3,9 @@
         <h1>Connexion</h1>
     
         <div class="errors">
-            <?php if(isset($errors['login'])): ?>
-                <p class="error">* <?= $errors['login'] ?></p>
-            <?php endif; ?>
-
-            <?php if(isset($errors['email'])): ?>
-                <p class="error">* <?= $errors['email'] ?></p>
-            <?php endif; ?>
-
-            <?php if(isset($errors['password'])): ?>
-                <p class="error">* <?= $errors['password'] ?></p>
-            <?php endif; ?>
+            <?php foreach($errors as $error): ?>
+                <p class="error">* <?= htmlspecialchars($error) ?></p>
+            <?php endforeach; ?>
         </div>
 
         <form action="" method="POST">
