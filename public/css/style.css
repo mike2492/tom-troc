@@ -156,6 +156,11 @@ footer img{
     padding-left: 14px;
 }
 
+.book-card > img{
+    width: 200px;
+    height: 200px;
+}
+
 .book-title{
     font-size: 16px;
     font-weight: 400;
@@ -379,6 +384,12 @@ footer img{
     width: 59%;
 }
 
+.book-detail__image > img{
+    width: 720px;
+    height: 863px;
+}
+
+
 .book-detail__info{
     width: 41%;
     display: flex;
@@ -429,6 +440,8 @@ footer img{
 }
 
 .book-detail__owner > img{
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
 }
 
@@ -669,6 +682,8 @@ footer img{
 
 .account-img > img{
     border-radius: 50%;
+    width: 135px;
+    height: 135px;
 }
 
 .account-img > a{
@@ -913,6 +928,11 @@ tbody tr td:last-child{
     padding-left: 39px;
 }
 
+.book-form__photo > img{
+    width: 488px;
+    height: 488px;
+}
+
 .book-form__photo label{
     display: flex;
     justify-content: end;
@@ -1087,10 +1107,6 @@ tbody tr td:last-child{
     padding: 1% 10%;
 }
 
-.messaging__message--sent > .messaging__date > img{
-    display: none;
-}
-
 .messaging__message--received > .messaging__date > img{
     border-radius: 50%;
     width: 24px;
@@ -1187,4 +1203,13 @@ tbody tr td:last-child{
 
 .error{
     color: red;
+}
+
+.account-img > form > input[type="file"]{
+    display: none;
+}
+
+.table-img{
+    width: 78px;
+    height: 78px;
 }
