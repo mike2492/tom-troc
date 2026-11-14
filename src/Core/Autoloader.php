@@ -1,5 +1,8 @@
 <?php
+// Loads a class file automatically the first time the class is used,
+// so no manual require is needed for controllers, entities or managers.
 spl_autoload_register(function($class){
+    // Folders searched, in order.
     $paths = [
         __DIR__ . '/',
         __DIR__ . '/../Controller/',
