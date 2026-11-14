@@ -1188,6 +1188,9 @@ tbody tr td:last-child{
 
 .errors > p{
     text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
 }
 
 .account__form > .errors{
