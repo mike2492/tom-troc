@@ -1,5 +1,6 @@
 <?php
 
+// Database access for the messages table (prepared queries only).
 class MessageManager extends Manager{
 
     public function create(Message $message) : void{
@@ -11,6 +12,9 @@ class MessageManager extends Manager{
         ]);
     }
 
+    // All messages between two members, in both directions, oldest first.
+    // Each placeholder has its own name (user_id1, user_id2...) because
+    // the same name cannot be reused in one query with native prepared statements.
     public function findConversation(int $userId, int $otherId) : array{
         $stmt = $this->db->prepare("SELECT * FROM messages
         WHERE (sender_id = :user_id1 AND receiver_id = :other_id1)
@@ -33,6 +37,8 @@ class MessageManager extends Manager{
         return $messages;
     }
 
+    // Every message sent or received by a member, newest first.
+    // The controller uses it to build the list of conversations.
     public function findByUserId(int $userId) : array{
         $stmt = $this->db->prepare("SELECT * FROM messages WHERE sender_id = :sender_id OR receiver_id = :receiver_id ORDER BY sent_at DESC");
         $stmt->execute([

@@ -1,5 +1,6 @@
 <?php
 
+// Database access for the books table (prepared queries only).
 class BookManager extends Manager{
 
     public function findByUserId(int $userId) : array{
@@ -65,6 +66,7 @@ class BookManager extends Manager{
         ]);
     }
 
+    // Newest first; id DESC breaks ties between books created in the same second.
     public function findAll() : array{
         $stmt = $this->db->query("SELECT * FROM books ORDER BY created_at DESC, id DESC");
 
@@ -79,6 +81,8 @@ class BookManager extends Manager{
     }
 
     public function searchByTitle(string $search) : array{
+        // In LIKE, % and _ are wildcards and \ is the escape character:
+        // escape them so the search text is always matched literally.
         $search = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
         $stmt = $this->db->prepare("SELECT * FROM books WHERE title LIKE :search ORDER BY created_at DESC, id DESC");
         $stmt->execute([
@@ -97,6 +101,7 @@ class BookManager extends Manager{
 
     public function findLatest(int $limit) : array{
         $stmt = $this->db->prepare("SELECT * FROM books ORDER BY created_at DESC LIMIT :limit");
+        // LIMIT needs a real integer, so the value is bound with PARAM_INT.
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
 
