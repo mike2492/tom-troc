@@ -1,5 +1,6 @@
 <?php
 
+// Handles registration, login and logout.
 class AuthController extends Controller{
 
     public function register(){
@@ -9,6 +10,7 @@ class AuthController extends Controller{
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+            // Fields must exist and be plain strings (an array like username[]=x would crash trim()).
             if(isset($_POST['username'], $_POST['email'], $_POST['password']) && is_string($_POST['username']) && is_string($_POST['email']) && is_string($_POST['password'])){
 
                 $username = trim($_POST['username']);
@@ -34,6 +36,7 @@ class AuthController extends Controller{
                 }
 
                 if(empty($errors)){
+                    // Never store a plain password: only its hash.
                     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
                     $user = new User([
                         'username' => $username,
@@ -41,6 +44,7 @@ class AuthController extends Controller{
                         'password' => $hashPassword
                     ]);
                     $userManager->create($user);
+                    // Redirect after POST so a page refresh does not resend the form.
                     header('Location: index.php?controller=auth&action=login');
                     exit;
                 }
@@ -76,9 +80,11 @@ class AuthController extends Controller{
 
                 if(empty($errors)){
                     $user = $userManager->findByEmail($email);
+                    // One single message for both cases: do not reveal which part is wrong.
                     if($user === null || !password_verify($password, $user->getPassword())){
                         $errors['login'] = "Email ou mot de passe incorrect";
                     } else{
+                        // New session id after login: prevents session fixation.
                         session_regenerate_id(true);
                         $_SESSION['user_id'] = $user->getId();
                         header('Location: index.php');
@@ -94,6 +100,7 @@ class AuthController extends Controller{
     }
 
     public function logout(){
+        // Empty the session data, then destroy the session itself.
         $_SESSION = [];
         session_destroy();
         header('Location: index.php');

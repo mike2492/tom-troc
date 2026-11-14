@@ -1,5 +1,6 @@
 <?php
 
+// Book pages: list with search, detail, edit (text and photo) and delete.
 class BookController extends Controller{
 
     public function edit(){
@@ -9,6 +10,7 @@ class BookController extends Controller{
         $bookManager = new BookManager();
         $book = $bookManager->findById($id);
 
+        // Ownership check: nobody can edit a book that belongs to someone else.
         if($book === null || $book->getUserId() !== $_SESSION['user_id']){
             header('Location: index.php?controller=account&action=index');
             exit;
@@ -17,6 +19,7 @@ class BookController extends Controller{
         $errors = [];
 
 
+        // The form has two parts: the photo form is the only one sending $_FILES['image'].
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])){
             $file = $_FILES['image'];
             
@@ -25,15 +28,19 @@ class BookController extends Controller{
             } elseif($file['size'] > 2 * 1024 * 1024){
                 $errors['image'] = "Image trop lourde (2 Mo Maximum)";
             } else{
+                // Whitelist of accepted types, each mapped to a safe extension.
                 $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+                // Real type read from the file content, not from the extension.
                 $mime = mime_content_type($file['tmp_name']);
 
                 if(!isset($allowed[$mime])){
                     $errors['image'] = "Format non autorisé (jpg, png, webp)";
                 } else{
+                    // Random name: the original file name is never used.
                     $newName = bin2hex(random_bytes(16)) . '.' . $allowed[$mime];
                     move_uploaded_file($file['tmp_name'], __DIR__ . '/../../public/uploads/books/' . $newName);
 
+                    // Delete the previous photo to avoid unused files.
                     if($book->getImage() !== null){
                         $oldFile = __DIR__ . '/../../public/uploads/books/' . $book->getImage();
 
@@ -50,6 +57,7 @@ class BookController extends Controller{
             }
         }
 
+        // Text form: only handled when no photo file was sent.
         if($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_FILES['image'])){
         
             if(isset($_POST['title'], $_POST['author'], $_POST['description'], $_POST['status']) && is_string($_POST['title']) && is_string($_POST['author']) && is_string($_POST['description']) && is_string($_POST['status'])){
@@ -71,6 +79,7 @@ class BookController extends Controller{
                     $errors['description'] = "Description requise";
                 }
 
+                // Strict check: status must be exactly one of the two allowed values.
                 if(!in_array($status, ['available', 'unavailable'], true)){
                     $errors['status'] = "Disponibilité non valide";
                 }
@@ -101,6 +110,7 @@ class BookController extends Controller{
         $bookManager = new BookManager();
         $book = $bookManager->findById($id);
 
+        // Same ownership check as edit().
         if($book === null || $book->getUserId() !== $_SESSION['user_id']){
             header('Location: index.php?controller=account&action=index');
             exit;
@@ -111,14 +121,17 @@ class BookController extends Controller{
         exit;
     }
     
+    // Public list of all books, with an optional search on the title.
     public function index(){
         $bookManager = new BookManager();
         $search = $_GET['search'] ?? '';
         
+        // ?search[]=x would be an array: treat it as an empty search.
         if(!is_string($search)){
             $search = '';
         }
 
+        // Limit the length of the search text.
         $search = mb_substr(trim($search), 0, 100);
 
         if($search === ''){
@@ -128,6 +141,7 @@ class BookController extends Controller{
         }
 
         $userManager = new UserManager();
+        // Owner names indexed by book id, so the view can display "Vendu par".
         $owners = [];
 
         foreach($books as $book){
@@ -138,6 +152,7 @@ class BookController extends Controller{
         $this->render('book/index', ['title' => 'Nos livres à l\'échange', 'books' => $books, 'owners' => $owners, 'search' => $search]);
     }
 
+    // Detail page of one book (no login required).
     public function show(){
         $id = (int) ($_GET['id'] ?? 0);
         $bookManager = new BookManager();

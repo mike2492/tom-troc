@@ -1,5 +1,6 @@
 <?php
 
+// Home page: shows the latest books added.
 class HomeController extends Controller{
 
     public function index(){
@@ -8,6 +9,7 @@ class HomeController extends Controller{
 
         $userManager = new UserManager();
 
+        // Owner names indexed by book id, used for "Vendu par".
         $owners = [];
         foreach($books as $book){
             $owner = $userManager->findById($book->getUserId());
