@@ -1,3 +1,4 @@
+<?php // Book detail page, with a link to the owner and a button to write to him. ?>
 <nav class="breadcrumb">
     <div class="container">
         <a href="index.php?controller=book&action=index">Nos livres</a> &gt; <?= htmlspecialchars($book->getTitle()) ?>
@@ -6,6 +7,7 @@
 
 <section class="book-detail">
     <div class="book-detail__image">
+        <?php // Uploaded photo if any, otherwise a placeholder. ?>
         <?php if($book->getImage() !== null): ?>
             <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
         <?php else: ?>
@@ -19,10 +21,12 @@
         <hr>
 
         <h2>Description</h2>
+        <?php // Escape first (XSS), then turn line breaks into <br>. The order matters. ?>
         <p class="book-detail__description"><?= nl2br(htmlspecialchars($book->getDescription())) ?></p>
 
         <h2>Propriétaire</h2>
         <a href="index.php?controller=account&action=show&id=<?= $owner->getId() ?>" class="book-detail__owner">
+            <?php // Owner avatar if any, otherwise a placeholder. ?>
             <?php if($owner->getAvatar() !== null): ?>
                  <img src="uploads/avatars/<?= htmlspecialchars($owner->getAvatar()) ?>" alt="">
             <?php else: ?>

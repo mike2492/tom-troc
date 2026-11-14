@@ -1,4 +1,7 @@
 <?php
+// Public profile of a member: card with his info and the list of his books.
+
+// "Member since": same calculation as on the account page.
 $interval = (new DateTimeImmutable($user->getCreatedAt()))->diff(new DateTimeImmutable());
 
 if($interval->y >= 1){
@@ -16,6 +19,7 @@ if($interval->y >= 1){
     <div class="container public-row">
         <div class="account__card">
             <div class="account-img">
+                <?php // Uploaded avatar if any, otherwise a placeholder. ?>
                 <?php if($user->getAvatar() !== null): ?>
                     <img src="uploads/avatars/<?= htmlspecialchars($user->getAvatar()) ?>" alt="" class="table-img">
                 <?php else: ?>
@@ -30,10 +34,12 @@ if($interval->y >= 1){
                 <p class="info-since">Membre depuis <?= $since ?></p>
                 <p class="info-library">Bibliothèque</p>
                 <span class="info-books"><img src="images/book.svg" alt=""><?= count($books) ?> livres</span>
+                <?php // Opens the conversation with this member. ?>
                 <a href="index.php?controller=message&action=index&id=<?= $user->getId() ?>">Ecrire un message</a>
             </div>
         </div>
 
+        <?php // Same table as on the account page, without availability and actions. ?>
         <table>
             <thead>
                 <tr>

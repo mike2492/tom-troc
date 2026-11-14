@@ -1,4 +1,8 @@
 <?php
+// "Mon compte": the logged-in member's profile, personal information and books.
+
+// "Member since": difference between the sign-up date and now,
+// shown in the largest unit that applies (years, months, days).
 $interval = (new DateTimeImmutable($user->getCreatedAt()))->diff(new DateTimeImmutable());
 
 if($interval->y >= 1){
@@ -19,11 +23,14 @@ if($interval->y >= 1){
         <div class="account__top">
             <div class="account__card">
                 <div class="account-img">
+                    <?php // Uploaded avatar if any, otherwise a placeholder. ?>
                     <?php if($user->getAvatar() !== null): ?>
                         <img src="uploads/avatars/<?= htmlspecialchars($user->getAvatar()) ?>" alt="">
                     <?php else: ?>
                         <img src="https://picsum.photos/135/135" alt="">
                     <?php endif; ?>
+                    <?php // First form: the avatar alone (multipart/form-data is required for files). ?>
+                    <?php // The only line of JavaScript: onchange sends the form as soon as a file is chosen. ?>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <label for="avatar">modifier</label>
                         <input type="file" name="avatar" id="avatar" onchange="this.form.submit()">
@@ -46,16 +53,19 @@ if($interval->y >= 1){
             
                 <h2>Vos informations personnelles</h2>
 
+                <?php // All the errors (fields, avatar, invalid form) are listed here. ?>
                 <div class="errors">
                     <?php foreach($errors as $error): ?>
                         <p class="error">* <?= htmlspecialchars($error) ?></p>
                     <?php endforeach; ?>
                 </div>
 
+                <?php // Second form: text information. The controller tells the two forms apart with $_FILES['avatar']. ?>
                 <form action="" method="POST">
                     <label for="email">Adresse email</label>
                     <input type="email" name="email" id="email" value="<?= htmlspecialchars($user->getEmail()) ?>">
 
+                    <?php // Left empty on purpose: an empty password means "keep the current one". ?>
                     <label for="password">Mot de passe</label>
                     <input type="password" name="password" id="password">
 
@@ -69,6 +79,7 @@ if($interval->y >= 1){
             </div>
         </div>
 
+        <?php // The member's own books, with edit and delete links. ?>
         <table>
             <thead>
                 <tr>
@@ -84,6 +95,7 @@ if($interval->y >= 1){
                 <?php foreach($books as $book): ?>
                     <tr>
                         <td>
+                            <?php // Uploaded photo if any, otherwise a placeholder. ?>
                             <?php if($book->getImage() !== null): ?>
                                 <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="" class="table-img">
                             <?php else: ?>
@@ -92,6 +104,7 @@ if($interval->y >= 1){
                         </td>
                         <td><?= htmlspecialchars($book->getTitle()) ?></td>
                         <td><?= htmlspecialchars($book->getAuthor()) ?></td>
+                        <?php // Preview of the description: first 100 characters, "..." only if it was cut. ?>
                         <td class="italic-description"><?= htmlspecialchars(mb_substr($book->getDescription(), 0, 100)) ?><?= mb_strlen($book->getDescription()) > 100 ? '...' : '' ?></td>
                         <td>
                             <?php if($book->getStatus() === 'available'): ?>

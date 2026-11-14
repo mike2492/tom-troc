@@ -1,3 +1,4 @@
+<?php // Home page: hero banner, latest books, how it works, banner image and values. ?>
 <section class="hero-section">
     <div class="container hero">
         <div class="hero-text">
@@ -13,6 +14,7 @@
 </section>
 
 
+<!-- Latest books: HomeController sends the 4 newest ones in $books -->
 <section class="latest-books">
     <div class="container">
         <h2>Les derniers livres ajoutés</h2>
@@ -20,13 +22,16 @@
             <?php foreach($books as $book): ?>
                 <a href="index.php?controller=book&action=show&id=<?= $book->getId() ?>">
                     <div class="book-card">
+                        <?php // Show the uploaded photo if there is one, otherwise a placeholder. ?>
                         <?php if($book->getImage() !== null): ?>
                             <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
                         <?php else: ?>
                             <img src="https://picsum.photos/200/200" alt="">
                         <?php endif; ?>
+                        <?php // htmlspecialchars() on every user-provided text: protects against XSS. ?>
                         <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
+                        <?php // $owners is indexed by book id (built in the controller). ?>
                         <p class="book-owner">Vendu par : <?= htmlspecialchars($owners[$book->getId()]) ?></p>
                     </div>
                 </a>
@@ -40,6 +45,7 @@
 </section>
 
 
+<!-- Static presentation: how the exchange works -->
 <section class="how-it-works">
     <div class="container">
         <h2>Comment ça marche ?</h2>
@@ -63,6 +69,7 @@
     <img src="images/banner.png" alt="">
 </section>
 
+<!-- Static presentation: site values -->
 <section class="values">
     <div class="container values-content">
         <h2>Nos valeurs</h2>

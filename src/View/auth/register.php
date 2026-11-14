@@ -1,7 +1,9 @@
+<?php // Sign-up page: errors, form and a link to the login page. ?>
 <section class="auth">
     <div class="auth__form">
         <h1>Inscription</h1>
 
+        <?php // All the errors (required fields, already taken, invalid form) are listed here. ?>
         <div class="errors">
             <?php foreach($errors as $error): ?>
                 <p class="error">* <?= htmlspecialchars($error) ?></p>
