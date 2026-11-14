@@ -5,6 +5,7 @@ config/config.php
 
 # Dependencies
 vendor/
+.php-cs-fixer.cache
 node_modules/
 
 # Logs and temporary files

@@ -1,4 +1,5 @@
 <?php
+
 // Single entry point: every request goes through this file.
 
 // Must run before any output so $_SESSION is available everywhere.

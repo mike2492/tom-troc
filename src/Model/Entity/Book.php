@@ -1,8 +1,8 @@
 <?php
 
 // A book owned by a member.
-class Book extends Entity{
-
+class Book extends Entity
+{
     // Null until the book is saved: the database generates the id.
     private ?int $id = null;
     private string $title;
@@ -94,5 +94,5 @@ class Book extends Entity{
     public function getCreatedAt(): string
     {
         return $this->createdAt;
-    }   
+    }
 }

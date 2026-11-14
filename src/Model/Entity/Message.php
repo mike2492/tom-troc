@@ -1,8 +1,8 @@
 <?php
 
 // A private message sent from one member to another.
-class Message extends Entity{
-
+class Message extends Entity
+{
     private ?int $id = null;
     private int $senderId;
     private int $receiverId;
@@ -59,5 +59,5 @@ class Message extends Entity{
     {
         return $this->sentAt;
     }
-    
+
 }

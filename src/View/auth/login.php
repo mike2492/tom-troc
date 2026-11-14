@@ -1,11 +1,11 @@
-<?php // Login page: errors, form and a link to the sign-up page. ?>
+<?php // Login page: errors, form and a link to the sign-up page.?>
 <section class="auth">
     <div class="auth__form">
         <h1>Connexion</h1>
     
-        <?php // All the errors (fields, wrong credentials, invalid form) are listed here. ?>
+        <?php // All the errors (fields, wrong credentials, invalid form) are listed here.?>
         <div class="errors">
-            <?php foreach($errors as $error): ?>
+            <?php foreach ($errors as $error): ?>
                 <p class="error">* <?= htmlspecialchars($error) ?></p>
             <?php endforeach; ?>
         </div>

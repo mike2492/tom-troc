@@ -1,4 +1,4 @@
-<?php // Book detail page, with a link to the owner and a button to write to him. ?>
+<?php // Book detail page, with a link to the owner and a button to write to him.?>
 <nav class="breadcrumb">
     <div class="container">
         <a href="index.php?controller=book&action=index">Nos livres</a> &gt; <?= htmlspecialchars($book->getTitle()) ?>
@@ -7,8 +7,8 @@
 
 <section class="book-detail">
     <div class="book-detail__image">
-        <?php // Uploaded photo if any, otherwise a placeholder. ?>
-        <?php if($book->getImage() !== null): ?>
+        <?php // Uploaded photo if any, otherwise a placeholder.?>
+        <?php if ($book->getImage() !== null): ?>
             <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
         <?php else: ?>
             <img src="https://picsum.photos/720/863" alt="">
@@ -21,13 +21,13 @@
         <hr>
 
         <h2>Description</h2>
-        <?php // Escape first (XSS), then turn line breaks into <br>. The order matters. ?>
+        <?php // Escape first (XSS), then turn line breaks into <br>. The order matters.?>
         <p class="book-detail__description"><?= nl2br(htmlspecialchars($book->getDescription())) ?></p>
 
         <h2>Propriétaire</h2>
         <a href="index.php?controller=account&action=show&id=<?= $owner->getId() ?>" class="book-detail__owner">
-            <?php // Owner avatar if any, otherwise a placeholder. ?>
-            <?php if($owner->getAvatar() !== null): ?>
+            <?php // Owner avatar if any, otherwise a placeholder.?>
+            <?php if ($owner->getAvatar() !== null): ?>
                  <img src="uploads/avatars/<?= htmlspecialchars($owner->getAvatar()) ?>" alt="">
             <?php else: ?>
                 <img src="https://picsum.photos/48/48" alt="">

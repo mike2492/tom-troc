@@ -3,10 +3,11 @@
 // Database access for the users table.
 // Every query is prepared: values are sent separately from the SQL,
 // which prevents SQL injection.
-class UserManager extends Manager{
-
+class UserManager extends Manager
+{
     // Returns null when no user has this email.
-    public function findByEmail(string $email) : ?User{
+    public function findByEmail(string $email): ?User
+    {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute([
             'email' => $email
@@ -14,7 +15,7 @@ class UserManager extends Manager{
 
         $row = $stmt->fetch();
 
-        if($row === false){
+        if ($row === false) {
             return null;
         }
 
@@ -22,7 +23,8 @@ class UserManager extends Manager{
         return $user;
     }
 
-    public function findByUsername(string $username) : ?User{
+    public function findByUsername(string $username): ?User
+    {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE username = :username");
         $stmt->execute([
             'username' => $username
@@ -30,7 +32,7 @@ class UserManager extends Manager{
 
         $row = $stmt->fetch();
 
-        if($row === false){
+        if ($row === false) {
             return null;
         }
 
@@ -39,7 +41,8 @@ class UserManager extends Manager{
     }
 
     // The password received here is already hashed by the controller.
-    public function create(User $user) : void{
+    public function create(User $user): void
+    {
         $stmt = $this->db->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
         $stmt->execute([
             'username' => $user->getUsername(),
@@ -48,7 +51,8 @@ class UserManager extends Manager{
         ]);
     }
 
-    public function findById(int $id) : ?User{
+    public function findById(int $id): ?User
+    {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
         $stmt->execute([
             'id' => $id
@@ -56,7 +60,7 @@ class UserManager extends Manager{
 
         $row = $stmt->fetch();
 
-        if($row === false){
+        if ($row === false) {
             return null;
         }
 
@@ -65,7 +69,8 @@ class UserManager extends Manager{
     }
 
     // Saves every editable field, including the avatar file name.
-    public function update(User $user) : void{
+    public function update(User $user): void
+    {
         $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, password = :password, avatar = :avatar WHERE id = :id");
         $stmt->execute([
             'username' => $user->getUsername(),

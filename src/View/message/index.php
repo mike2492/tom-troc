@@ -1,13 +1,13 @@
-<?php // Messaging: conversation list on the left, open thread and send form on the right. ?>
+<?php // Messaging: conversation list on the left, open thread and send form on the right.?>
 <section class="messaging">
     <div class="container messaging__inner">
         <div class="messaging__list">
             <h1><?= htmlspecialchars($title) ?></h1>
-            <?php // One line per contact, showing his latest message ($conversations is indexed by contact id). ?>
-            <?php foreach($conversations as $contactId => $message): ?>
+            <?php // One line per contact, showing his latest message ($conversations is indexed by contact id).?>
+            <?php foreach ($conversations as $contactId => $message): ?>
                 <a href="index.php?controller=message&action=index&id=<?= $contactId ?>" class="messaging__contact">
 
-                    <?php if($contacts[$contactId]->getAvatar() !== null): ?>
+                    <?php if ($contacts[$contactId]->getAvatar() !== null): ?>
                         <img src="uploads/avatars/<?= htmlspecialchars($contacts[$contactId]->getAvatar()) ?>" alt="">
                     <?php else: ?>
                         <img src="https://picsum.photos/48/48" alt="">
@@ -25,10 +25,10 @@
         </div>
 
         <div class="messaging__thread">
-            <?php // Nothing is shown here until a contact is selected. ?>
-            <?php if($selected !== null): ?>
+            <?php // Nothing is shown here until a contact is selected.?>
+            <?php if ($selected !== null): ?>
                 <div class="messaging__header">
-                    <?php if($selected->getAvatar() !== null): ?>
+                    <?php if ($selected->getAvatar() !== null): ?>
                         <img src="uploads/avatars/<?= htmlspecialchars($selected->getAvatar()) ?>" alt="">
                     <?php else: ?>
                         <img src="https://picsum.photos/48/48" alt="">
@@ -37,13 +37,13 @@
                 </div>
 
                 <div class="messaging__messages">
-                    <?php foreach($thread as $msg): ?>
-                        <?php // The --sent / --received class lets the CSS put own messages on the right and the others on the left. ?>
+                    <?php foreach ($thread as $msg): ?>
+                        <?php // The --sent / --received class lets the CSS put own messages on the right and the others on the left.?>
                         <div class="messaging__message <?= $msg->getSenderId() === $_SESSION['user_id'] ? 'messaging__message--sent' : 'messaging__message--received' ?>">
                             <p class="messaging__date">
-                                <?php // The avatar is only shown on received messages: the sender is then the selected contact. ?>
-                                <?php if($msg->getSenderId() !== $_SESSION['user_id']): ?>
-                                    <?php if($selected->getAvatar() !== null): ?>
+                                <?php // The avatar is only shown on received messages: the sender is then the selected contact.?>
+                                <?php if ($msg->getSenderId() !== $_SESSION['user_id']): ?>
+                                    <?php if ($selected->getAvatar() !== null): ?>
                                         <img src="uploads/avatars/<?= htmlspecialchars($selected->getAvatar()) ?>" alt="">
                                     <?php else: ?>
                                         <img src="https://picsum.photos/48/48" alt="">
@@ -51,16 +51,16 @@
                                 <?php endif; ?>
                                 <?= (new DateTimeImmutable($msg->getSentAt()))->format('d.m H:i') ?>
                             </p>
-                            <?php // Message content is user input: always escaped. ?>
+                            <?php // Message content is user input: always escaped.?>
                             <p class="messaging__text"><?= htmlspecialchars($msg->getContent()) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
 
-                <?php // Errors such as an empty message, shown just above the send form. ?>
-                <?php if(!empty($errors)): ?>
+                <?php // Errors such as an empty message, shown just above the send form.?>
+                <?php if (!empty($errors)): ?>
                     <div class="errors">
-                        <?php foreach($errors as $error): ?>
+                        <?php foreach ($errors as $error): ?>
                             <p class="error">* <?= htmlspecialchars($error) ?></p>
                         <?php endforeach; ?>
                     </div>

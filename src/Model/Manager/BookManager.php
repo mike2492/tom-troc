@@ -1,9 +1,10 @@
 <?php
 
 // Database access for the books table (prepared queries only).
-class BookManager extends Manager{
-
-    public function findByUserId(int $userId) : array{
+class BookManager extends Manager
+{
+    public function findByUserId(int $userId): array
+    {
         $stmt = $this->db->prepare("SELECT * FROM books WHERE user_id = :user_id");
         $stmt->execute([
             'user_id' => $userId
@@ -11,15 +12,16 @@ class BookManager extends Manager{
 
         $books = [];
         $rows = $stmt->fetchAll();
-        
-        foreach($rows as $row){
+
+        foreach ($rows as $row) {
             $books[] = new Book($row);
         }
 
         return $books;
     }
 
-    public function create(Book $book) : void{
+    public function create(Book $book): void
+    {
         $stmt = $this->db->prepare("INSERT INTO books (title, author, description, image, status, user_id) VALUES (:title, :author, :description, :image, :status, :user_id)");
         $stmt->execute([
             'title' => $book->getTitle(),
@@ -31,14 +33,15 @@ class BookManager extends Manager{
         ]);
     }
 
-    public function findById(int $id) : ?Book{
+    public function findById(int $id): ?Book
+    {
         $stmt = $this->db->prepare("SELECT * FROM books WHERE id = :id");
         $stmt->execute([
             'id' => $id
         ]);
         $row = $stmt->fetch();
 
-        if($row === false){
+        if ($row === false) {
             return null;
         }
 
@@ -47,7 +50,8 @@ class BookManager extends Manager{
         return $book;
     }
 
-    public function update(Book $book) : void{
+    public function update(Book $book): void
+    {
         $stmt = $this->db->prepare("UPDATE books SET title = :title, author = :author, description = :description, image = :image, status = :status WHERE id = :id");
         $stmt->execute([
             'title' => $book->getTitle(),
@@ -59,7 +63,8 @@ class BookManager extends Manager{
         ]);
     }
 
-    public function delete(int $id) : void{
+    public function delete(int $id): void
+    {
         $stmt = $this->db->prepare("DELETE FROM books WHERE id = :id");
         $stmt->execute([
             'id' => $id
@@ -67,20 +72,22 @@ class BookManager extends Manager{
     }
 
     // Newest first; id DESC breaks ties between books created in the same second.
-    public function findAll() : array{
+    public function findAll(): array
+    {
         $stmt = $this->db->query("SELECT * FROM books ORDER BY created_at DESC, id DESC");
 
         $books = [];
         $rows = $stmt->fetchAll();
 
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             $books[] = new Book($row);
         }
 
         return $books;
     }
 
-    public function searchByTitle(string $search) : array{
+    public function searchByTitle(string $search): array
+    {
         // In LIKE, % and _ are wildcards and \ is the escape character:
         // escape them so the search text is always matched literally.
         $search = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
@@ -92,14 +99,15 @@ class BookManager extends Manager{
         $books = [];
         $rows = $stmt->fetchAll();
 
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             $books[] = new Book($row);
         }
 
         return $books;
     }
 
-    public function findLatest(int $limit) : array{
+    public function findLatest(int $limit): array
+    {
         $stmt = $this->db->prepare("SELECT * FROM books ORDER BY created_at DESC LIMIT :limit");
         // LIMIT needs a real integer, so the value is bound with PARAM_INT.
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
@@ -108,7 +116,7 @@ class BookManager extends Manager{
         $books = [];
         $rows = $stmt->fetchAll();
 
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             $books[] = new Book($row);
         }
 

@@ -1,4 +1,4 @@
-<?php // Site header: logo, main navigation and account links. ?>
+<?php // Site header: logo, main navigation and account links.?>
 <header class="header">
     <div class="header__inner container">
         <div class="header__left">
@@ -10,8 +10,8 @@
         </div>
 
         <nav class="header__account">
-            <?php // The links change depending on whether a member is logged in. ?>
-            <?php if(isset($_SESSION['user_id'])): ?>
+            <?php // The links change depending on whether a member is logged in.?>
+            <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="index.php?controller=message&action=index"><span>
                     <img src="images/icon-message.png" alt="">
                 </span>Messagerie</a>

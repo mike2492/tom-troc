@@ -2,8 +2,8 @@
 
 // A member of the site. Properties are private: they are only
 // reachable through the getters and setters below.
-class User extends Entity{
-    
+class User extends Entity
+{
     private ?int $id = null;
     private string $username;
     private string $email;

@@ -1,41 +1,42 @@
 <?php
 
 // Handles registration, login and logout.
-class AuthController extends Controller{
-
-    public function register(){
+class AuthController extends Controller
+{
+    public function register()
+    {
 
         $errors = [];
         $userManager = new UserManager();
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Fields must exist and be plain strings (an array like username[]=x would crash trim()).
-            if(isset($_POST['username'], $_POST['email'], $_POST['password']) && is_string($_POST['username']) && is_string($_POST['email']) && is_string($_POST['password'])){
+            if (isset($_POST['username'], $_POST['email'], $_POST['password']) && is_string($_POST['username']) && is_string($_POST['email']) && is_string($_POST['password'])) {
 
                 $username = trim($_POST['username']);
                 $email = trim($_POST['email']);
                 $password = $_POST['password'];
 
-                if($username === ''){
+                if ($username === '') {
                     $errors['username'] = "Pseudo requis";
-                } elseif($userManager->findByUsername($username)){
+                } elseif ($userManager->findByUsername($username)) {
                     $errors['username'] = "Pseudo déjà pris";
                 }
-                
-                if($email === ''){
-                    $errors['email'] = "Email requis";
-                } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    $errors['email'] = "Email non valide";
-                } elseif($userManager->findByEmail($email)){
-                    $errors['email'] = "Email déjà pris";
-                } 
 
-                if($password === ''){
+                if ($email === '') {
+                    $errors['email'] = "Email requis";
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errors['email'] = "Email non valide";
+                } elseif ($userManager->findByEmail($email)) {
+                    $errors['email'] = "Email déjà pris";
+                }
+
+                if ($password === '') {
                     $errors['password'] = "Mot de passe requis";
                 }
 
-                if(empty($errors)){
+                if (empty($errors)) {
                     // Never store a plain password: only its hash.
                     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
                     $user = new User([
@@ -48,42 +49,43 @@ class AuthController extends Controller{
                     header('Location: index.php?controller=auth&action=login');
                     exit;
                 }
-            } else{
+            } else {
                 $errors['form'] = "Formulaire invalide";
-            }      
-        } 
+            }
+        }
 
         $this->render('auth/register', ['title' => 'Inscription', 'errors' => $errors]);
     }
 
-    public function login(){
-        
+    public function login()
+    {
+
         $errors = [];
         $userManager = new UserManager();
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(isset($_POST['email'], $_POST['password']) && is_string($_POST['email']) && is_string($_POST['password'])){
+            if (isset($_POST['email'], $_POST['password']) && is_string($_POST['email']) && is_string($_POST['password'])) {
 
                 $email = trim($_POST['email']);
                 $password = $_POST['password'];
 
-                if($email === ''){
-                    $errors['email'] = "Email requis"; 
-                } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                if ($email === '') {
+                    $errors['email'] = "Email requis";
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $errors['email'] = "Email non valide";
                 }
 
-                if($password === ''){
+                if ($password === '') {
                     $errors['password'] = "Mot de passe requis";
                 }
 
-                if(empty($errors)){
+                if (empty($errors)) {
                     $user = $userManager->findByEmail($email);
                     // One single message for both cases: do not reveal which part is wrong.
-                    if($user === null || !password_verify($password, $user->getPassword())){
+                    if ($user === null || !password_verify($password, $user->getPassword())) {
                         $errors['login'] = "Email ou mot de passe incorrect";
-                    } else{
+                    } else {
                         // New session id after login: prevents session fixation.
                         session_regenerate_id(true);
                         $_SESSION['user_id'] = $user->getId();
@@ -91,7 +93,7 @@ class AuthController extends Controller{
                         exit;
                     }
                 }
-            } else{
+            } else {
                 $errors['form'] = "Formulaire invalide";
             }
         }
@@ -99,7 +101,8 @@ class AuthController extends Controller{
         $this->render('auth/login', ['title' => 'Connexion', 'errors' => $errors]);
     }
 
-    public function logout(){
+    public function logout()
+    {
         // Empty the session data, then destroy the session itself.
         $_SESSION = [];
         session_destroy();

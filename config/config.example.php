@@ -1,4 +1,5 @@
 <?php
+
 // Copy this file to config/config.php and fill in your own values.
 // config/config.php is git-ignored: never commit real credentials.
 define('DB_HOST', 'your_host');         // e.g. localhost

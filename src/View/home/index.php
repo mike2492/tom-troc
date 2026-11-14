@@ -1,4 +1,4 @@
-<?php // Home page: hero banner, latest books, how it works, banner image and values. ?>
+<?php // Home page: hero banner, latest books, how it works, banner image and values.?>
 <section class="hero-section">
     <div class="container hero">
         <div class="hero-text">
@@ -19,19 +19,19 @@
     <div class="container">
         <h2>Les derniers livres ajoutés</h2>
         <div class="books-list">
-            <?php foreach($books as $book): ?>
+            <?php foreach ($books as $book): ?>
                 <a href="index.php?controller=book&action=show&id=<?= $book->getId() ?>">
                     <div class="book-card">
-                        <?php // Show the uploaded photo if there is one, otherwise a placeholder. ?>
-                        <?php if($book->getImage() !== null): ?>
+                        <?php // Show the uploaded photo if there is one, otherwise a placeholder.?>
+                        <?php if ($book->getImage() !== null): ?>
                             <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
                         <?php else: ?>
                             <img src="https://picsum.photos/200/200" alt="">
                         <?php endif; ?>
-                        <?php // htmlspecialchars() on every user-provided text: protects against XSS. ?>
+                        <?php // htmlspecialchars() on every user-provided text: protects against XSS.?>
                         <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
-                        <?php // $owners is indexed by book id (built in the controller). ?>
+                        <?php // $owners is indexed by book id (built in the controller).?>
                         <p class="book-owner">Vendu par : <?= htmlspecialchars($owners[$book->getId()]) ?></p>
                     </div>
                 </a>
