@@ -2,52 +2,6 @@
 
 class BookController extends Controller{
 
-    public function add(){
-        $this->requireLogin();
-
-        $errors = [];
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $title = trim($_POST['title'] ?? '');
-            $author = trim($_POST['author'] ?? '');
-            $description = $_POST['description'] ?? '';
-            $status = $_POST['status'] ?? '';
-
-            if($title === ''){
-                $errors['title'] = "Titre requis";
-            }
-
-            if($author === ''){
-                $errors['author'] = "Auteur requis";
-            }
-
-            if($description === ''){
-                $errors['description'] = "Description requise";
-            }
-
-            if(!in_array($status, ['available', 'unavailable'], true)){
-                $errors['status'] = "Disponibilité non valide";
-            }
-
-            if(empty($errors)){
-                $bookManager = new BookManager();
-                $book = new Book([
-                    'title' => $title,
-                    'author'=> $author,
-                    'description' => $description,
-                    'status' => $status,
-                    'user_id' => $_SESSION['user_id']
-                ]);
-
-                $bookManager->create($book);
-                header('Location: index.php?controller=account&action=index');
-                exit;
-            }
-        }
-
-        $this->render('book/form', ['title' => 'Ajouter un livre', 'errors' => $errors]);
-    }
-
     public function edit(){
         $this->requireLogin();
         $id = (int) ($_GET['id'] ?? 0);
