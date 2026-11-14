@@ -1,11 +1,13 @@
 <?php
 
+// A private message sent from one member to another.
 class Message extends Entity{
 
     private ?int $id = null;
     private int $senderId;
     private int $receiverId;
     private string $content;
+    // Kept as a string: the views format it (e.g. "21.08 15:48").
     private string $sentAt;
 
     public function setId(?int $id): void

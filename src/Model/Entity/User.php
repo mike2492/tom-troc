@@ -1,12 +1,17 @@
 <?php
 
+// A member of the site. Properties are private: they are only
+// reachable through the getters and setters below.
 class User extends Entity{
     
     private ?int $id = null;
     private string $username;
     private string $email;
+    // Always the hash, never the plain password.
     private string $password;
+    // File name only (the folder is added in the views). Null = no avatar yet.
     private ?string $avatar = null;
+    // Kept as a string: the views format the date when displaying it.
     private string $createdAt;
 
     public function setId(?int $id): void

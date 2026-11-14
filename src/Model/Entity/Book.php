@@ -1,13 +1,18 @@
 <?php
 
+// A book owned by a member.
 class Book extends Entity{
 
+    // Null until the book is saved: the database generates the id.
     private ?int $id = null;
     private string $title;
     private string $author;
     private string $description;
+    // File name only. Null = no photo uploaded.
     private ?string $image = null;
+    // 'available' or 'unavailable' (checked in the controller).
     private string $status;
+    // Id of the member who owns the book.
     private int $userId;
     private string $createdAt;
 
