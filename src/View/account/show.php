@@ -54,7 +54,7 @@ if ($interval->y >= 1) {
                     <tr>
                         <td>
                             <?php if ($book->getImage() !== null): ?>
-                                <img src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
+                                <img class="table-img" src="uploads/books/<?= htmlspecialchars($book->getImage()) ?>" alt="">
                             <?php else: ?>
                                 <img src="https://picsum.photos/78/78" alt="">
                             <?php endif; ?>
